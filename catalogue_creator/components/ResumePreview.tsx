@@ -13,7 +13,7 @@ const PDFViewer = dynamic(
 
 export default function ResumePreview() {
   return (
-    <PDFViewer>
+    <PDFViewer style={{ width: "100%", height: "500px" }}>
       <Resume />
     </PDFViewer>
   );
