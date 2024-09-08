@@ -1,5 +1,5 @@
 "use client";
-// ResumeContext.tsx
+
 import React, { createContext, useState, ReactNode } from "react";
 import { initialValues, ResumeData } from "./types";
 
@@ -8,7 +8,9 @@ interface ResumeContextProps {
   setResumeData: React.Dispatch<React.SetStateAction<ResumeData>>;
 }
 
-const ResumeContext = createContext<ResumeContextProps | undefined>(undefined);
+const ResumeContext = createContext<ResumeContextProps>(
+  {} as ResumeContextProps
+);
 
 export const ResumeProvider: React.FC<{ children: ReactNode }> = ({
   children,

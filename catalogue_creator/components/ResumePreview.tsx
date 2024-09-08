@@ -12,13 +12,6 @@ import {
   StyleSheet,
 } from "@react-pdf/renderer";
 
-// const PDFViewer = dynamic(
-//   () => import("@react-pdf/renderer").then((mod) => mod.PDFViewer),
-//   {
-//     ssr: false,
-//   }
-// );
-
 const styles = StyleSheet.create({
   page: {
     flexDirection: "row",
