@@ -1,6 +1,6 @@
 import React from "react";
-import ResumeForm from "./ResumeForm";
-import ResumePreview from "./ResumePreview";
+import { ResumeForm } from "./ResumeForm";
+import { ResumePreview } from "./ResumePreview";
 
 export default function Main() {
   return (

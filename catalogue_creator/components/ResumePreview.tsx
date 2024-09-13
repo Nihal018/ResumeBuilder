@@ -1,8 +1,7 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import React from "react";
-import { ResumeProvider, useResume } from "../ResumeContext";
+import { useResume } from "../ResumeContext";
 import {
   Page,
   PDFViewer,
@@ -24,7 +23,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function ResumePreview() {
+export function ResumePreview() {
   const { resumeData } = useResume();
   return (
     <PDFViewer style={{ width: "100%", height: "500px" }}>

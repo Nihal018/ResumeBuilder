@@ -4,7 +4,7 @@ import { Formik, Field, Form, FieldArray } from "formik";
 import { University } from "lucide-react";
 import { useResume } from "../ResumeContext";
 
-export default function ResumeForm() {
+export function ResumeForm() {
   const { resumeData, setResumeData } = useResume();
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
