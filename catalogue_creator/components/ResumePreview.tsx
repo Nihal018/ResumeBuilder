@@ -1,20 +1,44 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import Resume from "./Resume";
 import React from "react";
+import { useResume } from "../ResumeContext";
+import {
+  Page,
+  PDFViewer,
+  View,
+  Text,
+  Document,
+  StyleSheet,
+} from "@react-pdf/renderer";
 
-const PDFViewer = dynamic(
-  () => import("@react-pdf/renderer").then((mod) => mod.PDFViewer),
-  {
-    ssr: false,
-  }
-);
+const styles = StyleSheet.create({
+  page: {
+    flexDirection: "row",
+    backgroundColor: "#E4E4E4",
+  },
+  section: {
+    margin: 10,
+    padding: 10,
+    flexGrow: 1,
+  },
+});
 
-export default function ResumePreview() {
+export function ResumePreview() {
+  const { resumeData } = useResume();
   return (
     <PDFViewer style={{ width: "100%", height: "500px" }}>
-      <Resume />
+      <Document>
+        <Page size="A4" style={styles.page}>
+          <View style={styles.section}>
+            <Text>Name: {resumeData.personalInfo.name}</Text>
+            <Text>Email : {resumeData.personalInfo.email} </Text>
+            <Text>Institute : {resumeData.education[0].institution} </Text>
+          </View>
+          <View style={styles.section}>
+            <Text>Section #2</Text>
+          </View>
+        </Page>
+      </Document>
     </PDFViewer>
   );
 }
