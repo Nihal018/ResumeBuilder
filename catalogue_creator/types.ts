@@ -10,10 +10,11 @@ export interface ResumeData {
     degree: string;
     startDate: string;
     endDate: string;
+    fieldOfStudy: string;
   }>;
   workExperience: Array<{
     company: string;
-    position: string;
+    jobTitle: string;
     startDate: string;
     endDate: string;
     description: string;
@@ -35,12 +36,13 @@ export const initialValues: ResumeData = {
       degree: "",
       startDate: "",
       endDate: "",
+      fieldOfStudy: "",
     },
   ],
   workExperience: [
     {
       company: "",
-      position: "",
+      jobTitle: "",
       startDate: "",
       endDate: "",
       description: "",
