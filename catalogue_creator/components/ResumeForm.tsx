@@ -1,11 +1,25 @@
 "use client";
 import React from "react";
-import { Formik, Field, Form, FieldArray } from "formik";
+import { Formik, Field, Form, FieldArray, FieldArrayRenderProps } from "formik";
 import { University } from "lucide-react";
 import { useResume } from "../ResumeContext";
+import { Button } from "./UI/Button";
 
 export function ResumeForm() {
   const { resumeData, setResumeData } = useResume();
+
+  const addClick = (arrayHelpers: FieldArrayRenderProps) => {
+    arrayHelpers.push({
+      institution: "",
+      degree: "",
+      startDate: "",
+      endDate: "",
+    });
+  };
+  const removeClick = (arrayHelpers: FieldArrayRenderProps, index: number) => {
+    arrayHelpers.remove(index);
+  };
+
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <select
@@ -139,47 +153,31 @@ export function ResumeForm() {
 
                           {/* Side-by-side Add and Remove Buttons */}
                           <div className="flex justify-between items-center mt-2">
-                            <button
-                              type="button"
-                              className="text-gray-500 hover:text-gray-700 text-sm font-semibold border-b-2 border-transparent hover:border-gray-700"
-                              onClick={() =>
-                                arrayHelpers.push({
-                                  institution: "",
-                                  degree: "",
-                                  startDate: "",
-                                  endDate: "",
-                                })
+                            <Button
+                              onClick={() => addClick(arrayHelpers)}
+                              styles={
+                                "text-gray-500 hover:text-gray-700 text-sm font-semibold border-b-2 border-transparent hover:border-gray-700"
                               }
-                            >
-                              Add Education
-                            </button>
+                              buttonText="Add Education"
+                            />
 
-                            <button
-                              type="button"
-                              className="text-red-500 hover:text-red-700 text-sm font-semibold border-b-2 border-transparent hover:border-red-700"
-                              onClick={() => arrayHelpers.remove(index)}
-                            >
-                              Remove Education
-                            </button>
+                            <Button
+                              onClick={() => removeClick(arrayHelpers, index)}
+                              styles="text-red-500 hover:text-red-700 text-sm font-semibold border-b-2 border-transparent hover:border-red-700"
+                              buttonText="Remove Education"
+                            />
                           </div>
                         </div>
                       ))
                     ) : (
                       <div className="flex justify-end">
-                        <button
-                          type="button"
-                          className="text-gray-500 bg-blue-400 hover:text-gray-700 text-sm font-semibold border-b-2 border-transparent hover:border-gray-700"
-                          onClick={() =>
-                            arrayHelpers.push({
-                              institution: "",
-                              degree: "",
-                              startDate: "",
-                              endDate: "",
-                            })
+                        <Button
+                          onClick={() => addClick(arrayHelpers)}
+                          styles={
+                            "text-gray-500 hover:text-gray-700 text-sm font-semibold border-b-2 border-transparent hover:border-gray-700"
                           }
-                        >
-                          Add Education
-                        </button>
+                          buttonText="Add Education"
+                        />
                       </div>
                     )}
                   </div>
