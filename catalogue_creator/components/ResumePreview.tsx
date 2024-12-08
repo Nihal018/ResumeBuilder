@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import React from "react";
 import { useResume } from "../ResumeContext";
 import {
@@ -44,13 +43,13 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 10,
   },
   tableColumn: {
     width: "45%",
   },
   tableText: {
     fontSize: 12,
+    marginBottom: 2,
   },
   subHeader: {
     fontSize: 12,
@@ -67,7 +66,7 @@ const styles = StyleSheet.create({
 export function ResumePreview() {
   const { resumeData } = useResume();
   return (
-    <PDFViewer style={{ width: "100%", height: "600px" }}>
+    <PDFViewer style={{ width: "100%", height: "100%" }}>
       <Document>
         <Page size="A4" style={styles.page}>
           {/* Resume Header */}
@@ -95,6 +94,34 @@ export function ResumePreview() {
                 </Text>
               </View>
             </View>
+          ))}
+
+          <Text style={styles.sectionTitle}>Work Experience</Text>
+          {resumeData.workExperience.map((work, index) => (
+            <>
+              <View key={index} style={styles.table}>
+                <View style={styles.tableColumn}>
+                  <Text style={styles.tableText}>
+                    Company: {resumeData.workExperience[index].company}
+                  </Text>
+                  <Text style={styles.tableText}>
+                    Job Title: {resumeData.workExperience[index].jobTitle}
+                  </Text>
+                </View>
+                <View style={styles.tableColumn}>
+                  <Text style={styles.tableText}>
+                    {resumeData.workExperience[index].startDate} -{" "}
+                    {resumeData.workExperience[index].endDate}
+                  </Text>
+                </View>
+              </View>
+              <View style={{ marginBottom: 12 }}>
+                <Text style={styles.text}>
+                  Job Description:{" "}
+                  {resumeData.workExperience[index].description}
+                </Text>
+              </View>
+            </>
           ))}
         </Page>
       </Document>
