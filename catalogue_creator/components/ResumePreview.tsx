@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
 export function ResumePreview() {
   const { resumeData } = useResume();
   return (
-    <PDFViewer style={{ width: "100%", height: "600px" }}>
+    <PDFViewer style={{ width: "100%", height: "100%" }}>
       <Document>
         <Page size="A4" style={styles.page}>
           {/* Resume Header */}
