@@ -455,6 +455,16 @@ export function ResumeForm() {
               />
             </div>
 
+            <div className="mb-6 mt-4">
+              <h2 className="text-lg font-semibold text-gray-900">Skills</h2>
+              <Field
+                id="skills"
+                name="skills"
+                placeholder="For Ex: HTML"
+                className="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
             <div>
               <button
                 type="submit"
