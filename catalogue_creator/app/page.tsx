@@ -4,8 +4,10 @@ import Main from "../components/Main";
 
 export default function Home() {
   return (
-    <ResumeProvider>
-      <Main />
-    </ResumeProvider>
+    <div>
+      <ResumeProvider>
+        <Main />
+      </ResumeProvider>
+    </div>
   );
 }
