@@ -2,7 +2,9 @@ import React from "react";
 import { ResumeForm } from "./ResumeForm";
 import { ResumePreview } from "./ResumePreview";
 
-export default function Main() {
+export function Main() {
+  const isBrowser = typeof window !== "undefined";
+
   return (
     <main className="">
       <div className="my-4 flex flex-row">
@@ -16,7 +18,7 @@ export default function Main() {
 
         <div className="flex-1 border border-black  mx-2 p-2">
           {/* Preview Section */}
-          <ResumePreview />
+          {isBrowser && <ResumePreview />}
         </div>
       </div>
     </main>
