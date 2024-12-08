@@ -19,6 +19,11 @@ export interface ResumeData {
     endDate: string;
     description: string;
   }>;
+  projects: Array<{
+    name: string;
+    date: string;
+    description: string;
+  }>;
   skills: string[];
   // Add more sections as needed
 }
@@ -45,6 +50,13 @@ export const initialValues: ResumeData = {
       jobTitle: "",
       startDate: "",
       endDate: "",
+      description: "",
+    },
+  ],
+  projects: [
+    {
+      name: "",
+      date: "",
       description: "",
     },
   ],

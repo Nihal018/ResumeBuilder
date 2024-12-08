@@ -123,6 +123,29 @@ export function ResumePreview() {
               </View>
             </>
           ))}
+
+          <Text style={styles.sectionTitle}>Projects</Text>
+          {resumeData.projects.map((_, index) => (
+            <>
+              <View key={index} style={styles.table}>
+                <View style={styles.tableColumn}>
+                  <Text style={styles.tableText}>
+                    Name: {resumeData.projects[index].name}
+                  </Text>
+                </View>
+                <View style={styles.tableColumn}>
+                  <Text style={styles.tableText}>
+                    Date: {resumeData.projects[index].date}
+                  </Text>
+                </View>
+              </View>
+              <View style={{ marginBottom: 12 }}>
+                <Text style={styles.text}>
+                  {resumeData.projects[index].description}
+                </Text>
+              </View>
+            </>
+          ))}
         </Page>
       </Document>
     </PDFViewer>
