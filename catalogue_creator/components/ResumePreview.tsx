@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 12,
     lineHeight: 1.5,
-    color: "#333",
   },
   bulletText: {
     fontSize: 10,
@@ -146,6 +145,9 @@ export function ResumePreview() {
               </View>
             </>
           ))}
+
+          <Text style={styles.sectionTitle}>Skills</Text>
+          <Text style={styles.tableText}>{resumeData.skills}</Text>
         </Page>
       </Document>
     </PDFViewer>
