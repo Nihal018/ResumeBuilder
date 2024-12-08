@@ -400,6 +400,8 @@ export function ResumeForm() {
                               <Field
                                 id={`projects.${index}.date`}
                                 name={`projects.${index}.date`}
+                                placeholder="YYYY-MM"
+                                type="date"
                                 className="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                               />
                             </div>
