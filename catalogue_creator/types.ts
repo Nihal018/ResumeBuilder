@@ -4,6 +4,8 @@ export interface ResumeData {
     name: string;
     email: string;
     phone: string;
+    linkedinURL: string;
+    githubURL: string;
   };
   education: Array<{
     institution: string;
@@ -34,6 +36,8 @@ export const initialValues: ResumeData = {
     name: "",
     email: "",
     phone: "",
+    linkedinURL: "",
+    githubURL: "",
   },
   education: [
     {
