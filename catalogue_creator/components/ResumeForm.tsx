@@ -8,13 +8,24 @@ import { Button } from "./UI/Button";
 export function ResumeForm() {
   const { resumeData, setResumeData } = useResume();
 
-  const addClick = (arrayHelpers: FieldArrayRenderProps) => {
-    arrayHelpers.push({
-      institution: "",
-      degree: "",
-      startDate: "",
-      endDate: "",
-    });
+  const addClick = (arrayHelpers: FieldArrayRenderProps, section: string) => {
+    if (section === "education") {
+      arrayHelpers.push({
+        institution: "",
+        degree: "",
+        startDate: "",
+        endDate: "",
+      });
+    } else if (section === "work experience") {
+      arrayHelpers.push({
+        company: "",
+        jobTitle: "",
+        startDate: "",
+        endDate: "",
+        description: "",
+      });
+    } else {
+    }
   };
   const removeClick = (arrayHelpers: FieldArrayRenderProps, index: number) => {
     arrayHelpers.remove(index);
@@ -148,14 +159,14 @@ export function ResumeForm() {
                           <div className="flex flex-row">
                             <div className="flex-1 flex-col mr-2">
                               <label
-                                htmlFor={`education.${index}.endDate`}
+                                htmlFor={`education.${index}.startDate`}
                                 className="block text-sm font-medium text-gray-700"
                               >
                                 Start Date
                               </label>
                               <Field
-                                id={`education.${index}.endDate`}
-                                name={`education.${index}.endDate`}
+                                id={`education.${index}.startDate`}
+                                name={`education.${index}.startDate`}
                                 placeholder="YYYY-MM"
                                 type="date"
                                 className="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -164,14 +175,14 @@ export function ResumeForm() {
 
                             <div className="flex-1 flex-col ml-2">
                               <label
-                                htmlFor={`workExperience.${index}.endDate`}
+                                htmlFor={`education.${index}.endDate`}
                                 className="block text-sm font-medium text-gray-700"
                               >
                                 End Date
                               </label>
                               <Field
-                                id={`workExperience.${index}.endDate`}
-                                name={`workExperience.${index}.endDate`}
+                                id={`education.${index}.endDate`}
+                                name={`education.${index}.endDate`}
                                 placeholder="YYYY-MM"
                                 type="date"
                                 className="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -182,7 +193,9 @@ export function ResumeForm() {
                           {/* Side-by-side Add and Remove Buttons */}
                           <div className="flex justify-between items-center mt-4">
                             <Button
-                              onClick={() => addClick(arrayHelpers)}
+                              onClick={() =>
+                                addClick(arrayHelpers, "education")
+                              }
                               styles={
                                 "text-gray-500 hover:text-gray-700 text-sm font-semibold border-b-2 border-transparent hover:border-gray-700"
                               }
@@ -200,7 +213,7 @@ export function ResumeForm() {
                     ) : (
                       <div className="flex justify-end">
                         <Button
-                          onClick={() => addClick(arrayHelpers)}
+                          onClick={() => addClick(arrayHelpers, "education")}
                           styles={
                             "text-gray-500 hover:text-gray-700 text-sm font-semibold border-b-2 border-transparent hover:border-gray-700"
                           }
@@ -261,14 +274,14 @@ export function ResumeForm() {
                           <div className="flex flex-row mb-2">
                             <div className="flex-1 flex-col mr-2 mb-2">
                               <label
-                                htmlFor={`workExperience.${index}.endDate`}
+                                htmlFor={`workExperience.${index}.startDate`}
                                 className="block text-sm font-medium text-gray-700"
                               >
                                 Start Date
                               </label>
                               <Field
-                                id={`workExperience.${index}.endDate`}
-                                name={`workExperience.${index}.endDate`}
+                                id={`workExperience.${index}.startDate`}
+                                name={`workExperience.${index}.startDate`}
                                 placeholder="YYYY-MM"
                                 type="date"
                                 className="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -300,8 +313,7 @@ export function ResumeForm() {
                             </label>
                             <Field
                               id={`workExperience.${index}.description`}
-                              name={`workExperience.${index}.description
-                                `}
+                              name={`workExperience.${index}.description`}
                               className="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                           </div>
@@ -309,7 +321,9 @@ export function ResumeForm() {
                           {/* Side-by-side Add and Remove Buttons */}
                           <div className="flex justify-between items-center mt-4">
                             <Button
-                              onClick={() => addClick(arrayHelpers)}
+                              onClick={() =>
+                                addClick(arrayHelpers, "work experience")
+                              }
                               styles={
                                 "text-gray-500  hover:text-gray-700 text-sm font-semibold border-b-2 border-transparent hover:border-gray-700"
                               }
@@ -327,7 +341,9 @@ export function ResumeForm() {
                     ) : (
                       <div className="flex justify-end">
                         <Button
-                          onClick={() => addClick(arrayHelpers)}
+                          onClick={() =>
+                            addClick(arrayHelpers, "work experience")
+                          }
                           styles={
                             "text-gray-500 hover:text-gray-700 text-sm font-semibold border-b-2 border-transparent hover:border-gray-700"
                           }
