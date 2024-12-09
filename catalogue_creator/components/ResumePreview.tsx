@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 12,
     lineHeight: 1.5,
-    color: "#333",
   },
   bulletText: {
     fontSize: 10,
@@ -73,8 +72,9 @@ export function ResumePreview() {
           <Text style={styles.header}>{resumeData.personalInfo.name}</Text>
           <Text style={styles.text}>
             {resumeData.personalInfo.email} | {resumeData.personalInfo.phone} |{" "}
+            {resumeData.personalInfo.githubURL} |{" "}
+            {resumeData.personalInfo.linkedinURL}
           </Text>
-
           {/* Education Section  */}
           <Text style={styles.sectionTitle}>EDUCATION</Text>
           {resumeData.education.map((edu, index) => (
@@ -146,6 +146,9 @@ export function ResumePreview() {
               </View>
             </>
           ))}
+
+          <Text style={styles.sectionTitle}>Skills</Text>
+          <Text style={styles.tableText}>{resumeData.skills}</Text>
         </Page>
       </Document>
     </PDFViewer>

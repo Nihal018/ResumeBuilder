@@ -103,6 +103,37 @@ export function ResumeForm() {
               </div>
             </div>
 
+            <div className="mb-4 flex flex-row">
+              <div className="flex-1 flex-col mr-2">
+                <label
+                  htmlFor="personalInfo.linkedinURL"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  LinkedIn URL
+                </label>
+                <Field
+                  id="personalInfo.linkedinURL"
+                  name="personalInfo.linkedinURL"
+                  placeholder=""
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div className="flex-1 flex-col ml-2">
+                <label
+                  htmlFor="personalInfo.githubURL"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  GitHub URL
+                </label>
+                <Field
+                  id="personalInfo.githubURL"
+                  name="personalInfo.githubURL"
+                  className="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            </div>
+
             {/* Education Section */}
             <div className="mb-6 mt-8">
               <h2 className="text-lg font-semibold text-gray-900 ">
@@ -452,6 +483,16 @@ export function ResumeForm() {
                     )}
                   </div>
                 )}
+              />
+            </div>
+
+            <div className="mb-6 mt-4">
+              <h2 className="text-lg font-semibold text-gray-900">Skills</h2>
+              <Field
+                id="skills"
+                name="skills"
+                placeholder="For Ex: HTML"
+                className="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 

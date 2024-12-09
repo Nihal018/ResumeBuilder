@@ -4,6 +4,8 @@ export interface ResumeData {
     name: string;
     email: string;
     phone: string;
+    linkedinURL: string;
+    githubURL: string;
   };
   education: Array<{
     institution: string;
@@ -24,7 +26,7 @@ export interface ResumeData {
     date: string;
     description: string;
   }>;
-  skills: string[];
+  skills: string;
   // Add more sections as needed
 }
 
@@ -34,6 +36,8 @@ export const initialValues: ResumeData = {
     name: "",
     email: "",
     phone: "",
+    linkedinURL: "",
+    githubURL: "",
   },
   education: [
     {
@@ -60,6 +64,6 @@ export const initialValues: ResumeData = {
       description: "",
     },
   ],
-  skills: [],
+  skills: "",
   // Initialize more sections if needed
 };
