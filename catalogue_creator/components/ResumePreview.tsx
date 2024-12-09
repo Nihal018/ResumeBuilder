@@ -11,6 +11,8 @@ import {
   StyleSheet,
   Font,
 } from "@react-pdf/renderer";
+import { Header } from "./UI/Header";
+import { Education } from "./UI/Education";
 
 const styles = StyleSheet.create({
   page: {
@@ -69,32 +71,9 @@ export function ResumePreview() {
       <Document>
         <Page size="A4" style={styles.page}>
           {/* Resume Header */}
-          <Text style={styles.header}>{resumeData.personalInfo.name}</Text>
-          <Text style={styles.text}>
-            {resumeData.personalInfo.email} | {resumeData.personalInfo.phone} |{" "}
-            {resumeData.personalInfo.githubURL} |{" "}
-            {resumeData.personalInfo.linkedinURL}
-          </Text>
+          <Header />
           {/* Education Section  */}
-          <Text style={styles.sectionTitle}>EDUCATION</Text>
-          {resumeData.education.map((edu, index) => (
-            <View key={index} style={styles.table}>
-              <View style={styles.tableColumn}>
-                <Text style={styles.tableText}>
-                  Institution: {resumeData.education[index].institution}
-                </Text>
-                <Text style={styles.tableText}>
-                  Degree: {resumeData.education[index].degree}
-                </Text>
-              </View>
-              <View style={styles.tableColumn}>
-                <Text style={styles.tableText}>
-                  {resumeData.education[index].startDate} -{" "}
-                  {resumeData.education[index].endDate}
-                </Text>
-              </View>
-            </View>
-          ))}
+          <Education />
 
           <Text style={styles.sectionTitle}>Work Experience</Text>
           {resumeData.workExperience.map((work, index) => (
