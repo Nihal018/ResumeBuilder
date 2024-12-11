@@ -1,9 +1,51 @@
 "use client";
-import React from "react";
-import { Formik, Field, Form, FieldArray, FieldArrayRenderProps } from "formik";
+import React, { useEffect } from "react";
+import {
+  Formik,
+  Field,
+  Form,
+  FieldArray,
+  FieldArrayRenderProps,
+  useFormikContext,
+} from "formik";
 import { University } from "lucide-react";
 import { useResume } from "../ResumeContext";
 import { Button } from "./UI/Button";
+import { ResumeData } from "../types";
+
+import { useState } from "react";
+
+function useDebounce<T>(value: T, delay: number): T {
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [value, delay]);
+
+  return debouncedValue;
+}
+
+// Separate component to handle debounced context updates
+function DebouncedResumeUpdate() {
+  const { values } = useFormikContext<ResumeData>();
+  const { setResumeData } = useResume();
+
+  // Debounce the entire values object with a 500ms delay
+  const debouncedValues = useDebounce(values, 500);
+
+  useEffect(() => {
+    // Update context only when debounced values change
+    setResumeData(debouncedValues);
+  }, [debouncedValues, setResumeData]);
+
+  return null; // This component doesn't render anything
+}
 
 export function ResumeForm() {
   const { resumeData, setResumeData } = useResume();
@@ -37,6 +79,11 @@ export function ResumeForm() {
     arrayHelpers.remove(index);
   };
 
+  const handleSubmit = async (values: ResumeData) => {
+    await new Promise((r) => setTimeout(r, 500));
+    setResumeData(values); // Update context with form values
+  };
+
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <select
@@ -48,14 +95,15 @@ export function ResumeForm() {
 
       <Formik
         initialValues={resumeData}
-        onSubmit={async (values) => {
-          await new Promise((r) => setTimeout(r, 500));
-          setResumeData(values); // Update context with form values
+        onSubmit={(values) => {
+          handleSubmit(values);
           alert(JSON.stringify(values, null, 2));
         }}
       >
-        {({ values }) => (
+        {({ values, handleChange }) => (
           <Form>
+            <DebouncedResumeUpdate />
+
             <div className="flex-1 flex-col mb-3">
               <label
                 htmlFor="personalInfo.name"
@@ -68,6 +116,12 @@ export function ResumeForm() {
                 name="personalInfo.name"
                 placeholder="John Doe"
                 className="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                // onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                //   handleChange(event);
+                //   new Promise((r) => setTimeout(r, 500));
+                //   // Trigger form submission
+                //   handleSubmit(values);
+                // }}
               />
             </div>
 

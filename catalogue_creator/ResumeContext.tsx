@@ -40,3 +40,11 @@ export const ResumeProvider: React.FC<{ children: ReactNode }> = ({
     </ResumeContext.Provider>
   );
 };
+
+export const useResume = () => {
+  const context = React.useContext(ResumeContext);
+  if (!context) {
+    throw new Error("useResume must be used within a ResumeProvider");
+  }
+  return context;
+};
