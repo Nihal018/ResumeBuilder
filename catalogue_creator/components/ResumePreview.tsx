@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useResume } from "../ResumeContext";
+import { useResume } from "./ResumeContext";
 import {
   Page,
   PDFViewer,
@@ -72,9 +72,10 @@ export function ResumePreview() {
           <Text style={styles.header}>{resumeData.personalInfo.name}</Text>
           <Text style={styles.text}>
             {resumeData.personalInfo.email} | {resumeData.personalInfo.phone} |{" "}
-            {resumeData.personalInfo.githubURL} |{" "}
-            {resumeData.personalInfo.linkedinURL}
+            |{resumeData.personalInfo.linkedinURL}|
+            {resumeData.personalInfo.githubURL}
           </Text>
+
           {/* Education Section  */}
           <Text style={styles.sectionTitle}>EDUCATION</Text>
           {resumeData.education.map((edu, index) => (
