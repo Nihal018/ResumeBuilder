@@ -2,6 +2,9 @@
 
 import React from "react";
 
+// primary - blue
+// secondary - purple
+// outlined - bordered
 export function Button({
   onClick,
   styles,

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useResume } from "../ResumeContext";
+import { useResume } from "./ResumeContext";
 import {
   Page,
   PDFViewer,

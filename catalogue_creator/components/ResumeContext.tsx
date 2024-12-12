@@ -1,8 +1,8 @@
 "use client";
 
 import React, { createContext, useState, ReactNode, useCallback } from "react";
-import { initialValues, ResumeData } from "./types";
-import { isEqual } from "lodash";
+import { initialValues, ResumeData } from "../types";
+import isEqual from "lodash-es/isEqual"; // Import isEqual from lodash-es
 
 interface ResumeContextProps {
   resumeData: ResumeData;
@@ -12,6 +12,7 @@ interface ResumeContextProps {
 const ResumeContext = createContext<ResumeContextProps>(
   {} as ResumeContextProps
 );
+
 export const ResumeProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
