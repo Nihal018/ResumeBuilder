@@ -28,14 +28,23 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 20,
     marginBottom: 10,
-    borderBottom: "1px solid #000", // Simulating underline
+    borderBottom: "1px solid #000",
   },
   text: {
     fontSize: 12,
     lineHeight: 1.5,
   },
   bulletText: {
-    fontSize: 10,
+    fontSize: 12,
+    marginBottom: 5,
+    paddingLeft: 15,
+  },
+  bulletPoint: {
+    position: "absolute",
+    left: 5,
+  },
+  bulletContainer: {
+    position: "relative",
     marginBottom: 5,
   },
   table: {
@@ -64,6 +73,19 @@ const styles = StyleSheet.create({
 
 export function ResumePreview() {
   const { resumeData } = useResume();
+
+  const renderBulletPoint = (text: string) => (
+    <View style={styles.bulletContainer}>
+      <Text style={styles.bulletPoint}>•</Text>
+      <Text style={styles.bulletText}>{text}</Text>
+    </View>
+  );
+
+  // Function to split description into bullet points
+  const splitIntoBullets = (description: string) => {
+    return description.split(". ").filter((bullet) => bullet.trim().length > 0);
+  };
+
   return (
     <PDFViewer style={{ width: "100%", height: "100%" }}>
       <Document>
@@ -72,83 +94,72 @@ export function ResumePreview() {
           <Text style={styles.header}>{resumeData.personalInfo.name}</Text>
           <Text style={styles.text}>
             {resumeData.personalInfo.email} | {resumeData.personalInfo.phone} |{" "}
-            |{resumeData.personalInfo.linkedinURL}|
+            {resumeData.personalInfo.linkedinURL} |{" "}
             {resumeData.personalInfo.githubURL}
           </Text>
 
-          {/* Education Section  */}
+          {/* Education Section */}
           <Text style={styles.sectionTitle}>EDUCATION</Text>
           {resumeData.education.map((edu, index) => (
             <View key={index} style={styles.table}>
               <View style={styles.tableColumn}>
                 <Text style={styles.tableText}>
-                  Institution: {resumeData.education[index].institution}
+                  Institution: {edu.institution}
                 </Text>
-                <Text style={styles.tableText}>
-                  Degree: {resumeData.education[index].degree}
-                </Text>
+                <Text style={styles.tableText}>Degree: {edu.degree}</Text>
               </View>
               <View style={styles.tableColumn}>
                 <Text style={styles.tableText}>
-                  {resumeData.education[index].startDate} -{" "}
-                  {resumeData.education[index].endDate}
+                  {edu.startDate} - {edu.endDate}
                 </Text>
               </View>
             </View>
           ))}
 
-          <Text style={styles.sectionTitle}>Work Experience</Text>
+          <Text style={styles.sectionTitle}>WORK EXPERIENCE</Text>
           {resumeData.workExperience.map((work, index) => (
-            <>
-              <View key={index} style={styles.table}>
+            <View key={index}>
+              <View style={styles.table}>
                 <View style={styles.tableColumn}>
+                  <Text style={styles.tableText}>Company: {work.company}</Text>
                   <Text style={styles.tableText}>
-                    Company: {resumeData.workExperience[index].company}
-                  </Text>
-                  <Text style={styles.tableText}>
-                    Job Title: {resumeData.workExperience[index].jobTitle}
+                    Job Title: {work.jobTitle}
                   </Text>
                 </View>
                 <View style={styles.tableColumn}>
                   <Text style={styles.tableText}>
-                    {resumeData.workExperience[index].startDate} -{" "}
-                    {resumeData.workExperience[index].endDate}
+                    {work.startDate} - {work.endDate}
                   </Text>
                 </View>
               </View>
-              <View style={{ marginBottom: 12 }}>
-                <Text style={styles.text}>
-                  Job Description:{" "}
-                  {resumeData.workExperience[index].description}
-                </Text>
+              <View style={{ marginTop: 5, marginBottom: 12 }}>
+                {splitIntoBullets(work.description).map((bullet, bulletIndex) =>
+                  renderBulletPoint(bullet)
+                )}
               </View>
-            </>
+            </View>
           ))}
 
-          <Text style={styles.sectionTitle}>Projects</Text>
-          {resumeData.projects.map((_, index) => (
-            <>
-              <View key={index} style={styles.table}>
+          <Text style={styles.sectionTitle}>PROJECTS</Text>
+          {resumeData.projects.map((project, index) => (
+            <View key={index}>
+              <View style={styles.table}>
                 <View style={styles.tableColumn}>
-                  <Text style={styles.tableText}>
-                    Name: {resumeData.projects[index].name}
-                  </Text>
+                  <Text style={styles.tableText}>Name: {project.name}</Text>
                 </View>
                 <View style={styles.tableColumn}>
-                  <Text style={styles.tableText}>
-                    Date: {resumeData.projects[index].date}
-                  </Text>
+                  <Text style={styles.tableText}>Date: {project.date}</Text>
                 </View>
               </View>
-              <View style={{ marginBottom: 12 }}>
-                <Text style={styles.text}>
-                  {resumeData.projects[index].description}
-                </Text>
+              <View style={{ marginTop: 5, marginBottom: 12 }}>
+                {splitIntoBullets(project.description).map(
+                  (bullet, bulletIndex) => renderBulletPoint(bullet)
+                )}
               </View>
-            </>
+            </View>
           ))}
 
-          <Text style={styles.sectionTitle}>Skills</Text>
+          <Text style={styles.sectionTitle}>SKILLS</Text>
           <Text style={styles.tableText}>{resumeData.skills}</Text>
         </Page>
       </Document>

@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     fontFamily: "Times-Roman",
   },
   header: {
-    fontSize: 26,
+    fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 20,
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   sectionTitle: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "bold",
     borderBottom: "2px solid #000",
     marginTop: 20,
@@ -59,10 +59,20 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: "#666",
   },
-  description: {
+  bulletContainer: {
+    flexDirection: "row",
+    marginTop: 5,
+    paddingLeft: 10,
+  },
+  bulletPoint: {
+    fontSize: 11,
+    marginRight: 5,
+    color: "#444",
+  },
+  bulletText: {
     fontSize: 11,
     color: "#444",
-    marginTop: 5,
+    flex: 1,
     lineHeight: 1.5,
   },
   skillsContainer: {
@@ -82,6 +92,16 @@ const styles = StyleSheet.create({
 export function ProfessionalResumePreview() {
   const { resumeData } = useResume();
 
+  const renderBulletPoints = (description: string) => {
+    const bullets = description.split(". ").filter((bullet) => bullet.trim());
+    return bullets.map((bullet, index) => (
+      <View key={index} style={styles.bulletContainer}>
+        <Text style={styles.bulletPoint}>•</Text>
+        <Text style={styles.bulletText}>{bullet.trim()}</Text>
+      </View>
+    ));
+  };
+
   return (
     <PDFViewer style={{ width: "100%", height: "100%" }}>
       <Document>
@@ -89,8 +109,9 @@ export function ProfessionalResumePreview() {
           {/* Header */}
           <Text style={styles.header}>{resumeData.personalInfo.name}</Text>
           <Text style={styles.contactInfo}>
-            {resumeData.personalInfo.email} | {resumeData.personalInfo.phone} |
-            {resumeData.personalInfo.linkedinURL}
+            {resumeData.personalInfo.email} | {resumeData.personalInfo.phone} |{" "}
+            {resumeData.personalInfo.linkedinURL} {"  "}|{"\n"}
+            {resumeData.personalInfo.githubURL}
           </Text>
 
           {/* Education Section */}
@@ -118,7 +139,7 @@ export function ProfessionalResumePreview() {
                 </Text>
               </View>
               <Text style={styles.companyName}>{work.company}</Text>
-              <Text style={styles.description}>{work.description}</Text>
+              {renderBulletPoints(work.description)}
             </View>
           ))}
 
@@ -130,7 +151,7 @@ export function ProfessionalResumePreview() {
                 <Text style={styles.jobTitle}>{project.name}</Text>
                 <Text style={styles.dateRange}>{project.date}</Text>
               </View>
-              <Text style={styles.description}>{project.description}</Text>
+              {renderBulletPoints(project.description)}
             </View>
           ))}
 
