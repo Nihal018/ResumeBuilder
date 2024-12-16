@@ -1,4 +1,22 @@
 // types.ts
+export interface FormSection {
+  id: string;
+  title: string;
+  icon?: React.ComponentType;
+  isArray?: boolean;
+  fields: FormField[];
+}
+
+export interface FormField {
+  name: string;
+  label: string;
+  type: "text" | "date" | "textarea" | "email";
+  placeholder?: string;
+  validation?: object;
+  icon?: React.ComponentType;
+}
+export type FieldType = "text" | "date" | "textarea" | "email" | "tel";
+
 export interface ResumeData {
   personalInfo: {
     name: string;

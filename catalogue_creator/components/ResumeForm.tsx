@@ -17,6 +17,8 @@ import { Education } from "./Sections/Education";
 import { WorkExperience } from "./Sections/WorkExperience";
 import { Projects } from "./Sections/Projects";
 import { PersonalInfo } from "./Sections/PersonalInfo";
+import { formSections } from "../config/formSections";
+import { RenderFormSection } from "./form/RenderFormSection";
 
 function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
@@ -118,7 +120,6 @@ export function ResumeForm() {
         initialValues={resumeData}
         onSubmit={(values) => {
           handleSubmit(values);
-          alert(JSON.stringify(values, null, 2));
         }}
       >
         {({ values, setFieldValue }) => (
@@ -130,28 +131,15 @@ export function ResumeForm() {
               </Button>
             </div>
 
-            <PersonalInfo />
+            {formSections.map((section) => (
+              <RenderFormSection
+                key={`form-section-${section.id}`} // More specific key
+                section={section}
+                values={values}
+              />
+            ))}
 
-            <Education
-              values={values}
-              addClick={addClick}
-              removeClick={removeClick}
-            />
-
-            <WorkExperience
-              values={values}
-              addClick={addClick}
-              removeClick={removeClick}
-            />
-
-            {/* project section */}
-            <Projects
-              values={values}
-              addClick={addClick}
-              removeClick={removeClick}
-            />
-
-            <div className="mb-6 mt-4">
+            {/* <div className="mb-6 mt-4">
               <h2 className="text-lg font-semibold text-gray-900">Skills</h2>
               <Field
                 id="skills"
@@ -159,7 +147,7 @@ export function ResumeForm() {
                 placeholder="For Ex: HTML"
                 className="mt-1 block w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-            </div>
+            </div> */}
 
             <div>
               <Button type={"submit"} customStyles="w-36">

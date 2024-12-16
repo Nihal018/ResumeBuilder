@@ -139,6 +139,7 @@ export function ModernResumePreview() {
   const { resumeData } = useResume();
 
   const renderBulletPoints = (description: string) => {
+    if (description === "") return "";
     return description
       .split(". ")
       .filter((bullet) => bullet.trim())

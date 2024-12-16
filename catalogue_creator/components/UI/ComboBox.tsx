@@ -96,6 +96,7 @@ export function ComboBox({
                   key={option.key}
                   onClick={() => {
                     onSelect(option.key);
+                    setValue(option.label);
                     setIsOpen(false);
                   }}
                   className={clsx(
