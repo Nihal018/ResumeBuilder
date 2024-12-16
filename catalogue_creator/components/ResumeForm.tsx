@@ -4,12 +4,10 @@ import {
   Formik,
   Field,
   Form,
-  FieldArray,
   FieldArrayRenderProps,
   useFormikContext,
   FormikHelpers,
 } from "formik";
-import { University } from "lucide-react";
 import { useResume } from "./ResumeContext";
 import { Button } from "./UI/Button";
 import { ResumeData, sampleData } from "../types";
@@ -19,7 +17,6 @@ import { Education } from "./Sections/Education";
 import { WorkExperience } from "./Sections/WorkExperience";
 import { Projects } from "./Sections/Projects";
 import { PersonalInfo } from "./Sections/PersonalInfo";
-import { DropdownMenu } from "./UI/DropdownMenu";
 
 function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
@@ -52,10 +49,6 @@ function DebouncedResumeUpdate() {
 
   return null; // This component doesn't render anything
 }
-
-const onSelectTemplate = (key: string) => {
-  console.log(key);
-};
 
 export function ResumeForm() {
   const { resumeData, setResumeData } = useResume();

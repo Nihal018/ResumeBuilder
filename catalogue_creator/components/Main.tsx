@@ -4,6 +4,7 @@ import { ResumePreview } from "./ResumePreview";
 import { DropdownMenu } from "./UI/DropdownMenu";
 import { ModernResumePreview } from "./ModernResumePreview";
 import { ProfessionalResumePreview } from "./ProfessionalResumePreview";
+import { ComboBox } from "./UI/ComboBox";
 
 const templateComponents = {
   "1": ResumePreview,
@@ -46,9 +47,16 @@ export function Main() {
           <div className="">
             <p className="text-center">Templates</p>
             <div className="min-w-fit w-8/12 mx-auto ">
-              <DropdownMenu
+              {/* <DropdownMenu
                 options={options}
                 placeholder="Select a Template"
+                onSelect={onSelectTemplate}
+                selected="1"
+              /> */}
+
+              <ComboBox
+                options={options}
+                placeholder="Select a template"
                 onSelect={onSelectTemplate}
                 selected="1"
               />

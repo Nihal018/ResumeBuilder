@@ -14,12 +14,12 @@ import {
 } from "@floating-ui/react";
 import { clsx } from "clsx";
 
-type SelectorOption = {
+export type SelectorOption = {
   key: string;
   label: string;
 };
 
-type SelectorProps = {
+export type SelectorProps = {
   options: SelectorOption[];
   selected?: string;
   placeholder?: string;
