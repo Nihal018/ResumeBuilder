@@ -7,6 +7,19 @@ export interface FormSection {
   fields: FormField[];
 }
 
+export interface Theme {
+  colors: {
+    primary: string;
+    secondary: string;
+    text: string;
+    background: string;
+  };
+  fonts: {
+    heading: string;
+    body: string;
+  };
+}
+
 export interface FormField {
   name: string;
   label: string;

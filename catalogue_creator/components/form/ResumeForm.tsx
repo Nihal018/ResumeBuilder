@@ -6,6 +6,8 @@ import { ResumeData, sampleData } from "../../types";
 import { useResume } from "../ResumeContext";
 import { Button } from "../UI/Button";
 import { RenderFormSection } from "./RenderFormSection";
+import { useTheme } from "../ThemeContext";
+import { CustomizationPanel } from "../customization/CustomizationPanel";
 
 function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
@@ -41,6 +43,7 @@ function DebouncedResumeUpdate() {
 export function ResumeForm() {
   const { resumeData, setResumeData } = useResume();
   const [isAutofilled, setIsAutofilled] = useState(false);
+  const { theme } = useTheme();
 
   const handleSubmit = async (values: ResumeData) => {
     await new Promise((r) => setTimeout(r, 500));
@@ -72,7 +75,15 @@ export function ResumeForm() {
     setIsAutofilled(true);
   };
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div
+      className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md"
+      style={{
+        fontFamily: theme.fonts.body,
+        color: theme.colors.text,
+        background: theme.colors.background,
+      }}
+    >
+      <CustomizationPanel />
       <Formik
         initialValues={resumeData}
         onSubmit={(values) => {
