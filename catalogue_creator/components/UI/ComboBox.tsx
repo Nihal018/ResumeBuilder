@@ -9,11 +9,9 @@ import {
   flip,
   shift,
   autoUpdate,
-  useRole,
-  FloatingFocusManager,
 } from "@floating-ui/react";
 import { clsx } from "clsx";
-import { options } from "../Main";
+
 import { SelectorOption, SelectorProps } from "./DropdownMenu";
 
 export function ComboBox({

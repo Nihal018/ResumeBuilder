@@ -6,7 +6,6 @@ interface FormFieldProps {
   prefix?: string;
 }
 export function RenderFormField({ field, prefix }: FormFieldProps) {
-  // Properly construct the field name
   const fieldName = prefix ? `${prefix}.${field.name}` : field.name;
   const Icon = field.icon;
 

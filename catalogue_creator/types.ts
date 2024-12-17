@@ -15,7 +15,7 @@ export interface FormField {
   validation?: object;
   icon?: React.ComponentType;
 }
-export type FieldType = "text" | "date" | "textarea" | "email" | "tel";
+export type FieldType = "text" | "date" | "textarea" | "email";
 
 export interface ResumeData {
   personalInfo: {

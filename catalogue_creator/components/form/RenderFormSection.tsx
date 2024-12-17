@@ -1,5 +1,5 @@
 import { FieldArrayRenderProps, FieldArray } from "formik";
-import { FormField, FormSection } from "../../types";
+import { FormSection } from "../../types";
 import { ArraySection } from "./ArraySection";
 import { RenderFormField } from "./RenderFormField";
 interface FormSectionProps {
@@ -9,8 +9,6 @@ interface FormSectionProps {
 }
 export function RenderFormSection({ section, values }: FormSectionProps) {
   const Icon = section.icon;
-
-  // Add debugging
 
   return (
     <div className="mb-6 mt-8">

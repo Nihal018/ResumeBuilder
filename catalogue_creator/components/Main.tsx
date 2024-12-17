@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { ResumeForm } from "./ResumeForm";
 import { ComboBox } from "./UI/ComboBox";
 
 import dynamic from "next/dynamic";
 import { RenderSelectedTemplate } from "./TemplatePreviewSection";
+import { ResumeForm } from "./form/ResumeForm";
 
 const DynamicRenderSelectedTemplate = dynamic(
   () =>

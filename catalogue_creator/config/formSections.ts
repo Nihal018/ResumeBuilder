@@ -124,14 +124,13 @@ export const formSections: FormSection[] = [
       },
     ],
   },
-  // ... other sections
   {
     id: "skills",
     title: "Skills",
     isArray: false,
     fields: [
       {
-        name: "skillsList", // Match the property name in the ResumeData type
+        name: "skillsList",
         type: "textarea",
         placeholder: "For Ex: HTML, CSS, JavaScript",
         label: "",

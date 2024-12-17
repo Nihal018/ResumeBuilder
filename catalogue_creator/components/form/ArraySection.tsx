@@ -13,7 +13,6 @@ export function ArraySection({
   section,
   values,
   arrayHelpers,
-  disabled,
 }: ArraySectionProps) {
   const items = values[section.id] || [];
 
