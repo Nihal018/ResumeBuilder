@@ -54,13 +54,13 @@ export function CustomizationPanel() {
           <TabsTrigger value="fonts">Fonts</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="colors" className="space-y-4 mt-4">
+        <TabsContent value="colors" className="flex mt-4">
           {colorOptions.map((option) => (
-            <div key={option.key} className="space-y-2">
+            <div key={option.key} className="space-y-2 mx-auto my-auto">
               <label className="block text-sm font-medium text-gray-700">
                 {option.label}
               </label>
-              <div className="flex items-center gap-4">
+              <div className="items-center gap-4">
                 <input
                   type="color"
                   value={theme.colors[option.key]}
@@ -69,9 +69,6 @@ export function CustomizationPanel() {
                   }
                   className="w-16 h-8 rounded cursor-pointer"
                 />
-                <span className="text-sm text-gray-600">
-                  {theme.colors[option.key]}
-                </span>
               </div>
             </div>
           ))}
