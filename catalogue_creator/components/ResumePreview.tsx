@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo } from "react";
-import { useResume } from "./ResumeContext";
+
 import {
   Page,
   PDFViewer,
@@ -9,10 +9,11 @@ import {
   Text,
   Document,
   StyleSheet,
-  Font,
 } from "@react-pdf/renderer";
-import { useTheme } from "./ThemeContext";
+
 import { fontFamilyMap } from "./fonts";
+import { useResume } from "./context/ResumeContext";
+import { useTheme } from "./context/ThemeContext";
 
 export function ResumePreview() {
   const { resumeData } = useResume();
@@ -115,8 +116,6 @@ export function ResumePreview() {
     });
   }, [theme]);
 
-  console.log(styles);
-
   const renderBulletPoint = (text: string) => (
     <View style={styles.bulletContainer}>
       <Text style={styles.bulletPoint}>•</Text>
@@ -128,16 +127,8 @@ export function ResumePreview() {
     return description.split(". ").filter((bullet) => bullet.trim().length > 0);
   };
 
-  useEffect(() => {
-    console.log("Theme updated:", theme);
-    console.log("Document key:", documentKey);
-    console.log("Generated styles:", styles);
-  }, [theme, documentKey, styles]);
-
   return (
-    <PDFViewer
-      style={{ width: "100%", height: "100%", fontFamily: "Rochester" }}
-    >
+    <PDFViewer style={{ width: "100%", height: "100%" }}>
       <Document key={documentKey}>
         <Page size="A4" style={styles.page}>
           {/* Resume Header */}

@@ -9,8 +9,6 @@ import {
   flip,
   shift,
   autoUpdate,
-  useRole,
-  FloatingFocusManager,
 } from "@floating-ui/react";
 import { clsx } from "clsx";
 

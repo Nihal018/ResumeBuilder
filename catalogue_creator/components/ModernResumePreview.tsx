@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { useResume } from "./ResumeContext";
+import React, { useMemo } from "react";
+
 import {
   Page,
   PDFViewer,
@@ -10,6 +10,9 @@ import {
   Document,
   StyleSheet,
 } from "@react-pdf/renderer";
+import { useResume } from "./context/ResumeContext";
+import { useTheme } from "./context/ThemeContext";
+import { fontFamilyMap } from "./fonts";
 
 const styles = StyleSheet.create({
   page: {
@@ -137,6 +140,145 @@ const styles = StyleSheet.create({
 
 export function ModernResumePreview() {
   const { resumeData } = useResume();
+  const { theme } = useTheme();
+
+  const documentKey = useMemo(
+    () =>
+      JSON.stringify({
+        colors: theme.colors,
+        fonts: theme.fonts,
+      }),
+    [theme]
+  );
+
+  const styles = useMemo(() => {
+    return StyleSheet.create({
+      page: {
+        flexDirection: "row",
+        backgroundColor: "#FFFFFF",
+        fontFamily: fontFamilyMap[theme.fonts.body] || "Ruluko",
+      },
+      leftColumn: {
+        width: "30%",
+        backgroundColor: "#2C3E50",
+        padding: 20,
+        color: "white",
+      },
+      rightColumn: {
+        width: "70%",
+        padding: 30,
+      },
+      header: {
+        fontSize: 24,
+        fontWeight: "bold",
+        marginBottom: 5,
+        fontFamily: fontFamilyMap[theme.fonts.heading] || "Ruluko",
+      },
+      subHeader: {
+        fontSize: 14,
+        color: "#95A5A6",
+        marginBottom: 20,
+      },
+      leftSectionTitle: {
+        fontSize: 14,
+        fontWeight: "bold",
+        marginTop: 20,
+        marginBottom: 10,
+        color: "#3498DB",
+        fontFamily: fontFamilyMap[theme.fonts.heading] || "Ruluko",
+        borderBottom: "1px solid #3498DB",
+        paddingBottom: 5,
+      },
+      rightSectionTitle: {
+        fontSize: 16,
+        fontWeight: "bold",
+        marginTop: 15,
+        marginBottom: 10,
+        color: theme.colors.primary,
+        fontFamily: fontFamilyMap[theme.fonts.heading] || "Ruluko",
+        borderBottom: "2px solid #3498DB",
+        paddingBottom: 5,
+      },
+      contactText: {
+        fontSize: 10,
+        marginBottom: 5,
+        color: "#ECF0F1",
+      },
+      skillTag: {
+        fontSize: 10,
+        backgroundColor: "#34495E",
+        color: "white",
+        padding: 4,
+        marginBottom: 5,
+        borderRadius: 3,
+      },
+      experienceBlock: {
+        marginBottom: 15,
+      },
+      companyHeader: {
+        color: theme.colors.primary,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginBottom: 5,
+        fontFamily: fontFamilyMap[theme.fonts.heading] || "Ruluko",
+      },
+      companyName: {
+        fontSize: 14,
+        fontWeight: "bold",
+        color: theme.colors.secondary,
+        fontFamily: fontFamilyMap[theme.fonts.body] || "Ruluko",
+      },
+      dateText: {
+        fontSize: 12,
+        color: theme.colors.text,
+      },
+      jobTitle: {
+        fontSize: 12,
+        color: theme.colors.secondary,
+        marginBottom: 5,
+        fontFamily: fontFamilyMap[theme.fonts.body] || "Ruluko",
+      },
+      bulletContainer: {
+        flexDirection: "row",
+        marginBottom: 3,
+        paddingLeft: 10,
+      },
+      bullet: {
+        width: 10,
+        fontSize: 12,
+        color: theme.colors.secondary,
+      },
+      bulletText: {
+        fontSize: 10,
+        color: theme.colors.text,
+        flex: 1,
+        lineHeight: 1.4,
+      },
+      educationBlock: {
+        marginBottom: 10,
+      },
+      institutionName: {
+        fontSize: 12,
+        color: "#2C3E50",
+        fontFamily: fontFamilyMap[theme.fonts.heading] || "Ruluko",
+      },
+      degree: {
+        fontSize: 12,
+        color: "#7F8C8D",
+        marginBottom: 3,
+      },
+      projectBlock: {
+        marginBottom: 15,
+        fontFamily: fontFamilyMap[theme.fonts.body] || "Ruluko",
+      },
+      projectName: {
+        fontSize: 12,
+        color: theme.colors.secondary,
+        fontFamily: fontFamilyMap[theme.fonts.heading] || "Ruluko",
+        marginBottom: 3,
+      },
+    });
+  }, [theme]);
 
   const renderBulletPoints = (description: string) => {
     if (description === "") return "";

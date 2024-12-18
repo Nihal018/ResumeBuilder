@@ -1,7 +1,7 @@
-import { useTheme } from "../ThemeContext";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../UI/tabs";
 import { Card } from "@/components/UI/card";
-import { FontFamily, fontFamilyMap } from "../fonts";
+import { FontFamily } from "../fonts";
+import { useTheme } from "../context/ThemeContext";
 
 const fontOptions: Array<{ label: string; value: FontFamily }> = [
   { label: "Rochester", value: "Rochester" },
@@ -47,7 +47,7 @@ export function CustomizationPanel() {
   };
 
   return (
-    <Card className="p-4 mb-4">
+    <Card className="p-4 mb-4 text-base">
       <Tabs defaultValue="colors">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="colors">Colors</TabsTrigger>

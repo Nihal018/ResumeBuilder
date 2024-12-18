@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { FontFamily } from "./fonts";
+import { FontFamily } from "../fonts";
 
 interface Theme {
   colors: {

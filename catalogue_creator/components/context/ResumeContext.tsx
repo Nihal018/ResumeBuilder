@@ -1,8 +1,9 @@
 "use client";
 
 import React, { createContext, useState, ReactNode, useCallback } from "react";
-import { initialValues, ResumeData } from "../types";
+
 import isEqual from "lodash-es/isEqual"; // Import isEqual from lodash-es
+import { initialValues, ResumeData } from "../../types";
 
 interface ResumeContextProps {
   resumeData: ResumeData;

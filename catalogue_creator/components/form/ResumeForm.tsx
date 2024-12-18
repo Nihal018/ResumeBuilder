@@ -3,11 +3,13 @@ import React, { useEffect, useState } from "react";
 import { Formik, Form, useFormikContext, FormikHelpers } from "formik";
 import { formSections } from "../../config/formSections";
 import { ResumeData, sampleData } from "../../types";
-import { useResume } from "../ResumeContext";
+
 import { Button } from "../UI/Button";
 import { RenderFormSection } from "./RenderFormSection";
-import { useTheme } from "../ThemeContext";
+
 import { CustomizationPanel } from "../customization/CustomizationPanel";
+import { useResume } from "../context/ResumeContext";
+import { useTheme } from "../context/ThemeContext";
 
 function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
@@ -75,14 +77,7 @@ export function ResumeForm() {
     setIsAutofilled(true);
   };
   return (
-    <div
-      className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md"
-      style={{
-        fontFamily: theme.fonts.body,
-        color: theme.colors.text,
-        background: theme.colors.background,
-      }}
-    >
+    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <CustomizationPanel />
       <Formik
         initialValues={resumeData}
