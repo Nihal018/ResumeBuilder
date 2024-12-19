@@ -13,134 +13,27 @@ import {
 import { useResume } from "./context/ResumeContext";
 import { useTheme } from "./context/ThemeContext";
 import { fontFamilyMap } from "./fonts";
+import { useSectionOrder } from "./context/SectionOrderContext";
 
-const styles = StyleSheet.create({
-  page: {
-    flexDirection: "row",
-    backgroundColor: "#FFFFFF",
-    fontFamily: "Helvetica",
-  },
-  leftColumn: {
-    width: "30%",
-    backgroundColor: "#2C3E50",
-    padding: 20,
-    color: "white",
-  },
-  rightColumn: {
-    width: "70%",
-    padding: 30,
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 5,
-    fontFamily: "Helvetica-Bold",
-  },
-  subHeader: {
-    fontSize: 14,
-    color: "#95A5A6",
-    marginBottom: 20,
-  },
-  leftSectionTitle: {
-    fontSize: 14,
-    fontWeight: "bold",
-    marginTop: 20,
-    marginBottom: 10,
-    color: "#3498DB",
-    fontFamily: "Helvetica-Bold",
-    borderBottom: "1px solid #3498DB",
-    paddingBottom: 5,
-  },
-  rightSectionTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginTop: 15,
-    marginBottom: 10,
-    color: "#2C3E50",
-    fontFamily: "Helvetica-Bold",
-    borderBottom: "2px solid #3498DB",
-    paddingBottom: 5,
-  },
-  contactText: {
-    fontSize: 10,
-    marginBottom: 5,
-    color: "#ECF0F1",
-  },
-  skillTag: {
-    fontSize: 10,
-    backgroundColor: "#34495E",
-    color: "white",
-    padding: 4,
-    marginBottom: 5,
-    borderRadius: 3,
-  },
-  experienceBlock: {
-    marginBottom: 15,
-  },
-  companyHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 5,
-  },
-  companyName: {
-    fontSize: 14,
-    fontWeight: "bold",
-    color: "#2C3E50",
-    fontFamily: "Helvetica-Bold",
-  },
-  dateText: {
-    fontSize: 10,
-    color: "#7F8C8D",
-  },
-  jobTitle: {
-    fontSize: 12,
-    color: "#3498DB",
-    marginBottom: 5,
-    fontFamily: "Helvetica-Bold",
-  },
-  bulletContainer: {
-    flexDirection: "row",
-    marginBottom: 3,
-    paddingLeft: 10,
-  },
-  bullet: {
-    width: 10,
-    fontSize: 10,
-    color: "#3498DB",
-  },
-  bulletText: {
-    fontSize: 10,
-    color: "#2C3E50",
-    flex: 1,
-    lineHeight: 1.4,
-  },
-  educationBlock: {
-    marginBottom: 10,
-  },
-  institutionName: {
-    fontSize: 12,
-    color: "#2C3E50",
-    fontFamily: "Helvetica-Bold",
-  },
-  degree: {
-    fontSize: 10,
-    color: "#7F8C8D",
-    marginBottom: 3,
-  },
-  projectBlock: {
-    marginBottom: 15,
-  },
-  projectName: {
-    fontSize: 12,
-    color: "#2C3E50",
-    fontFamily: "Helvetica-Bold",
-    marginBottom: 3,
-  },
-});
+const LEFT_COLUMN_SECTIONS = ["personalInfo", "skills", "education"];
+const RIGHT_COLUMN_SECTIONS = ["workExperience", "projects"];
 
 export function ModernResumePreview() {
   const { resumeData } = useResume();
   const { theme } = useTheme();
+  const { sectionOrder } = useSectionOrder();
+
+  const leftColumnSections = useMemo(
+    () =>
+      sectionOrder.filter((section) => LEFT_COLUMN_SECTIONS.includes(section)),
+    [sectionOrder]
+  );
+
+  const rightColumnSections = useMemo(
+    () =>
+      sectionOrder.filter((section) => RIGHT_COLUMN_SECTIONS.includes(section)),
+    [sectionOrder]
+  );
 
   const documentKey = useMemo(
     () =>
@@ -293,14 +186,11 @@ export function ModernResumePreview() {
       ));
   };
 
-  return (
-    <PDFViewer style={{ width: "100%", height: "100%" }}>
-      <Document>
-        <Page size="A4" style={styles.page}>
-          {/* Left Column */}
-          <View style={styles.leftColumn}>
-            <Text style={styles.header}>{resumeData.personalInfo.name}</Text>
-
+  const renderSection = (sectionId: string) => {
+    switch (sectionId) {
+      case "personalInfo":
+        return (
+          <>
             {/* Contact Information */}
             <Text style={styles.leftSectionTitle}>CONTACT</Text>
             <Text style={styles.contactText}>
@@ -315,16 +205,11 @@ export function ModernResumePreview() {
             <Text style={styles.contactText}>
               {resumeData.personalInfo.githubURL}
             </Text>
-
-            {/* Skills */}
-            <Text style={styles.leftSectionTitle}>SKILLS</Text>
-            {resumeData.skills.split(",").map((skill, index) => (
-              <Text key={index} style={styles.skillTag}>
-                {skill.trim()}
-              </Text>
-            ))}
-
-            {/* Education */}
+          </>
+        );
+      case "education":
+        return (
+          <>
             <Text style={styles.leftSectionTitle}>EDUCATION</Text>
             {resumeData.education.map((edu, index) => (
               <View key={index} style={styles.educationBlock}>
@@ -339,11 +224,11 @@ export function ModernResumePreview() {
                 </Text>
               </View>
             ))}
-          </View>
-
-          {/* Right Column */}
-          <View style={styles.rightColumn}>
-            {/* Professional Experience */}
+          </>
+        );
+      case "workExperience":
+        return (
+          <>
             <Text style={styles.rightSectionTitle}>
               PROFESSIONAL EXPERIENCE
             </Text>
@@ -359,8 +244,11 @@ export function ModernResumePreview() {
                 {renderBulletPoints(work.description)}
               </View>
             ))}
-
-            {/* Projects */}
+          </>
+        );
+      case "projects":
+        return (
+          <>
             <Text style={styles.rightSectionTitle}>PROJECTS</Text>
             {resumeData.projects.map((project, index) => (
               <View key={index} style={styles.projectBlock}>
@@ -370,6 +258,44 @@ export function ModernResumePreview() {
                 </View>
                 {renderBulletPoints(project.description)}
               </View>
+            ))}
+          </>
+        );
+      case "skills":
+        return (
+          <>
+            <Text style={styles.leftSectionTitle}>SKILLS</Text>
+            {resumeData.skills.split(",").map((skill, index) => (
+              <Text key={index} style={styles.skillTag}>
+                {skill.trim()}
+              </Text>
+            ))}
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <PDFViewer style={{ width: "100%", height: "100%" }}>
+      <Document key={documentKey}>
+        <Page size="A4" style={styles.page}>
+          <View style={styles.leftColumn}>
+            {/* Personal Info is always at top */}
+            <Text style={styles.header}>{resumeData.personalInfo.name}</Text>
+
+            {/* Render left column sections in order */}
+            {leftColumnSections.map((sectionId) => (
+              <View key={sectionId}>{renderSection(sectionId)}</View>
+            ))}
+          </View>
+
+          {/* Right Column */}
+          <View style={styles.rightColumn}>
+            {/* Render right column sections in order */}
+            {rightColumnSections.map((sectionId) => (
+              <View key={sectionId}>{renderSection(sectionId)}</View>
             ))}
           </View>
         </Page>

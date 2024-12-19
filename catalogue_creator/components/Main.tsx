@@ -36,7 +36,7 @@ export function Main() {
         <div className="border border-black flex-1 mx-2 p-2 overflow-y-auto ">
           <div className="">
             <p className="text-center">Templates</p>
-            <div className="min-w-fit w-8/12 mx-auto ">
+            <div className="min-w-fit max-w-2xl w-8/12 mx-auto ">
               <ComboBox
                 options={options}
                 placeholder="Select a template"

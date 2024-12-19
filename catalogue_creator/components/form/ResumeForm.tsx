@@ -155,7 +155,7 @@ export function ResumeForm() {
             </DndProvider>
 
             <div>
-              <Button type={"submit"} customStyles="w-36">
+              <Button type={"submit"} customStyles="w-36 mt-4">
                 Submit
               </Button>
             </div>

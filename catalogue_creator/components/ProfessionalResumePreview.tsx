@@ -12,10 +12,12 @@ import {
   StyleSheet,
 } from "@react-pdf/renderer";
 import { useTheme } from "./context/ThemeContext";
+import { useSectionOrder } from "./context/SectionOrderContext";
 
 export function ProfessionalResumePreview() {
   const { resumeData } = useResume();
   const { theme } = useTheme();
+  const { sectionOrder } = useSectionOrder();
 
   const documentKey = useMemo(
     () =>
@@ -120,68 +122,92 @@ export function ProfessionalResumePreview() {
     ));
   };
 
+  const renderSection = (sectionId: string) => {
+    switch (sectionId) {
+      case "personalInfo":
+        return (
+          <>
+            <Text style={styles.header}>{resumeData.personalInfo.name}</Text>
+            <Text style={styles.contactInfo}>
+              {resumeData.personalInfo.email} | {resumeData.personalInfo.phone}{" "}
+              | {resumeData.personalInfo.linkedinURL} {"  "}|{"\n"}
+              {resumeData.personalInfo.githubURL}
+            </Text>
+          </>
+        );
+      case "education":
+        return (
+          <>
+            <Text style={styles.sectionTitle}>EDUCATION</Text>
+            {resumeData.education.map((edu, index) => (
+              <View key={index} style={styles.entryContainer}>
+                <View style={styles.entryHeader}>
+                  <Text style={styles.jobTitle}>{edu.degree}</Text>
+                  <Text style={styles.dateRange}>
+                    {edu.startDate} - {edu.endDate}
+                  </Text>
+                </View>
+                <Text style={styles.companyName}>{edu.institution}</Text>
+              </View>
+            ))}
+          </>
+        );
+      case "workExperience":
+        return (
+          <>
+            <Text style={styles.sectionTitle}>PROFESSIONAL EXPERIENCE</Text>
+            {resumeData.workExperience.map((work, index) => (
+              <View key={index} style={styles.entryContainer}>
+                <View style={styles.entryHeader}>
+                  <Text style={styles.jobTitle}>{work.jobTitle}</Text>
+                  <Text style={styles.dateRange}>
+                    {work.startDate} - {work.endDate}
+                  </Text>
+                </View>
+                <Text style={styles.companyName}>{work.company}</Text>
+                {renderBulletPoints(work.description)}
+              </View>
+            ))}
+          </>
+        );
+      case "projects":
+        return (
+          <>
+            <Text style={styles.sectionTitle}>PROJECTS</Text>
+            {resumeData.projects.map((project, index) => (
+              <View key={index} style={styles.entryContainer}>
+                <View style={styles.entryHeader}>
+                  <Text style={styles.jobTitle}>{project.name}</Text>
+                  <Text style={styles.dateRange}>{project.date}</Text>
+                </View>
+                {renderBulletPoints(project.description)}
+              </View>
+            ))}
+          </>
+        );
+      case "skills":
+        return (
+          <>
+            <Text style={styles.sectionTitle}>SKILLS</Text>
+            <View style={styles.skillsContainer}>
+              {resumeData.skills.split(",").map((skill, index) => (
+                <Text key={index} style={styles.skillTag}>
+                  {skill.trim()}
+                </Text>
+              ))}
+            </View>
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <PDFViewer style={{ width: "100%", height: "100%" }}>
       <Document key={documentKey}>
         <Page size="A4" style={styles.page}>
-          {/* Header */}
-          <Text style={styles.header}>{resumeData.personalInfo.name}</Text>
-          <Text style={styles.contactInfo}>
-            {resumeData.personalInfo.email} | {resumeData.personalInfo.phone} |{" "}
-            {resumeData.personalInfo.linkedinURL} {"  "}|{"\n"}
-            {resumeData.personalInfo.githubURL}
-          </Text>
-
-          {/* Education Section */}
-          <Text style={styles.sectionTitle}>EDUCATION</Text>
-          {resumeData.education.map((edu, index) => (
-            <View key={index} style={styles.entryContainer}>
-              <View style={styles.entryHeader}>
-                <Text style={styles.jobTitle}>{edu.degree}</Text>
-                <Text style={styles.dateRange}>
-                  {edu.startDate} - {edu.endDate}
-                </Text>
-              </View>
-              <Text style={styles.companyName}>{edu.institution}</Text>
-            </View>
-          ))}
-
-          {/* Work Experience Section */}
-          <Text style={styles.sectionTitle}>PROFESSIONAL EXPERIENCE</Text>
-          {resumeData.workExperience.map((work, index) => (
-            <View key={index} style={styles.entryContainer}>
-              <View style={styles.entryHeader}>
-                <Text style={styles.jobTitle}>{work.jobTitle}</Text>
-                <Text style={styles.dateRange}>
-                  {work.startDate} - {work.endDate}
-                </Text>
-              </View>
-              <Text style={styles.companyName}>{work.company}</Text>
-              {renderBulletPoints(work.description)}
-            </View>
-          ))}
-
-          {/* Projects Section */}
-          <Text style={styles.sectionTitle}>PROJECTS</Text>
-          {resumeData.projects.map((project, index) => (
-            <View key={index} style={styles.entryContainer}>
-              <View style={styles.entryHeader}>
-                <Text style={styles.jobTitle}>{project.name}</Text>
-                <Text style={styles.dateRange}>{project.date}</Text>
-              </View>
-              {renderBulletPoints(project.description)}
-            </View>
-          ))}
-
-          {/* Skills Section */}
-          <Text style={styles.sectionTitle}>SKILLS</Text>
-          <View style={styles.skillsContainer}>
-            {resumeData.skills.split(",").map((skill, index) => (
-              <Text key={index} style={styles.skillTag}>
-                {skill.trim()}
-              </Text>
-            ))}
-          </View>
+          {sectionOrder.map((sectionId: string) => renderSection(sectionId))}
         </Page>
       </Document>
     </PDFViewer>
