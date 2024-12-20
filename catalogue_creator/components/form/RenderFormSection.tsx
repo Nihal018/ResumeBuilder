@@ -12,7 +12,7 @@ export function RenderFormSection({ section, values }: FormSectionProps) {
   const isCustomSection = section.isCustom;
   if (isCustomSection) {
     return (
-      <div className="mb-6 mt-8">
+      <div className="mb-6 mt-2">
         <h2 className="text-lg font-semibold mb-4">{section.title}</h2>
         {(section.fields as CustomSectionField[]).map((field) => (
           <div key={field.id} className="mb-4">

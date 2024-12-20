@@ -36,7 +36,8 @@ export function ResumePreview() {
     return StyleSheet.create({
       page: {
         backgroundColor: theme.colors.background || "#FFFFFF",
-        padding: 40,
+        paddingVertical: 20,
+        paddingHorizontal: 40,
         fontFamily: fontFamilyMap[theme.fonts.body] || "Ruluko",
       },
       header: {
@@ -48,9 +49,9 @@ export function ResumePreview() {
         fontFamily: fontFamilyMap[theme.fonts.heading] || "Ruluko",
       },
       sectionTitle: {
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: "bold",
-        marginTop: 20,
+        marginTop: 10,
         marginBottom: 10,
         borderBottom: `1px solid ${theme.colors.primary}`,
         color: theme.colors.primary,
@@ -64,7 +65,7 @@ export function ResumePreview() {
       },
       bulletText: {
         fontSize: 12,
-        marginBottom: 5,
+        marginBottom: 3,
         paddingLeft: 15,
         color: theme.colors.text,
         fontFamily: theme.fonts.body,
@@ -72,11 +73,11 @@ export function ResumePreview() {
       bulletPoint: {
         position: "absolute",
         left: 5,
+        bottom: 2,
         color: theme.colors.primary,
       },
       bulletContainer: {
         position: "relative",
-        marginBottom: 5,
       },
       table: {
         display: "flex",
@@ -87,41 +88,45 @@ export function ResumePreview() {
         width: "45%",
       },
       tableText: {
-        fontSize: 12,
+        fontSize: 14,
         marginBottom: 2,
         color: theme.colors.text,
         fontFamily: theme.fonts.body,
       },
       companyText: {
-        fontSize: 12,
+        fontSize: 14,
+
         fontWeight: "bold",
         color: theme.colors.secondary,
         fontFamily: theme.fonts.body,
       },
       institutionText: {
-        fontSize: 12,
+        fontSize: 14,
+
         fontWeight: "bold",
         color: theme.colors.secondary,
         fontFamily: theme.fonts.body,
       },
       dateText: {
         fontSize: 12,
+        marginTop: 4,
         color: theme.colors.secondary,
         fontFamily: theme.fonts.body,
         textAlign: "right",
       },
       contactInfo: {
-        fontSize: 12,
+        fontSize: 10,
         textAlign: "center",
-        marginBottom: 10,
+        justifyContent: "space-between",
+        marginBottom: 6,
         color: theme.colors.text,
         fontFamily: theme.fonts.body,
       },
       customSectionContainer: {
-        marginBottom: 15,
+        marginBottom: 5,
       },
       customFieldLabel: {
-        fontSize: 12,
+        fontSize: 14,
         fontWeight: "bold",
         color: theme.colors.secondary,
         fontFamily: theme.fonts.body,
@@ -133,7 +138,7 @@ export function ResumePreview() {
         marginTop: 2,
       },
       customSectionRow: {
-        marginBottom: 8,
+        marginBottom: 6,
       },
     });
   }, [theme]);
@@ -146,6 +151,7 @@ export function ResumePreview() {
   );
 
   const splitIntoBullets = (description: string) => {
+    if (!description) return [];
     return description.split(". ").filter((bullet) => bullet.trim().length > 0);
   };
 
@@ -158,7 +164,9 @@ export function ResumePreview() {
 
     return (
       <>
-        <Text style={styles.sectionTitle}>{section.title.toUpperCase()}</Text>
+        <Text style={{ ...styles.sectionTitle, marginTop: 16 }}>
+          {section.title.toUpperCase()}
+        </Text>
         <View style={styles.customSectionContainer}>
           {(section.fields as CustomSectionField[]).map((field) => {
             const value = customSectionData[field.name];
@@ -199,10 +207,8 @@ export function ResumePreview() {
           <>
             <Text style={styles.header}>{resumeData.personalInfo.name}</Text>
             <Text style={styles.contactInfo}>
-              {resumeData.personalInfo.email} | {resumeData.personalInfo.phone}
-            </Text>
-            <Text style={styles.contactInfo}>
-              {resumeData.personalInfo.linkedinURL} |{" "}
+              {resumeData.personalInfo.email} | {resumeData.personalInfo.phone}{" "}
+              | {resumeData.personalInfo.linkedinURL} |
               {resumeData.personalInfo.githubURL}
             </Text>
           </>
@@ -266,7 +272,7 @@ export function ResumePreview() {
                     <Text style={styles.dateText}>{project.date}</Text>
                   </View>
                 </View>
-                <View style={{ marginTop: 5, marginBottom: 12 }}>
+                <View style={{ marginTop: 5, marginBottom: 8 }}>
                   {splitIntoBullets(project.description).map(
                     (bullet, bulletIndex) => renderBulletPoint(bullet)
                   )}

@@ -6,7 +6,7 @@ export function Header() {
           {/* Logo/Brand */}
           <div className="flex items-center ml-6 ">
             <svg
-              className="w-8 h-8 text-blue-600"
+              className="w-8 h-8 text-blue-600 mr-2"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -19,7 +19,7 @@ export function Header() {
               />
             </svg>
             <h1 className="text-xl font-semibold text-gray-900 ">
-              Resume Builder
+              ResumeBuilder
             </h1>
           </div>
 

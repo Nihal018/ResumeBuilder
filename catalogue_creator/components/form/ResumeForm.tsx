@@ -110,23 +110,25 @@ export function ResumeForm() {
     if (!sectionConfig || !sectionConfig.isCustom) return null;
 
     return (
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold">{sectionConfig.title}</h3>
-        {(sectionConfig.fields as CustomSectionField[]).map((field) => (
-          <div key={field.id}>
-            <label className="block text-sm font-medium mb-1">
-              {field.label}
-            </label>
-            <Field
-              name={`customSections.${sectionId}.${field.name}`}
-              type={field.type === "textarea" ? undefined : field.type}
-              as={field.type === "textarea" ? "textarea" : "input"}
-              className={`w-full p-2 border rounded ${
-                field.type === "textarea" ? "h-32" : ""
-              }`}
-            />
-          </div>
-        ))}
+      <div className=" space-y-4 ">
+        <h3 className="text-lg font-semibold ml-6">{sectionConfig.title}</h3>
+        <div className=" p-4 border rounded-lg bg-gray-50">
+          {(sectionConfig.fields as CustomSectionField[]).map((field) => (
+            <div key={field.id}>
+              <label className="block text-sm font-medium mb-1">
+                {field.label}
+              </label>
+              <Field
+                name={`customSections.${sectionId}.${field.name}`}
+                type={field.type === "textarea" ? undefined : field.type}
+                as={field.type === "textarea" ? "textarea" : "input"}
+                className={`w-full p-2 border rounded ${
+                  field.type === "textarea" ? "h-32" : ""
+                }`}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     );
   };
