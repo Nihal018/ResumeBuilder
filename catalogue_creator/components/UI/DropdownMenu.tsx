@@ -31,6 +31,9 @@ export function DropdownMenu({
   onSelect,
 }: SelectorProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<SelectorOption | null>(
+    null
+  );
 
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,
@@ -48,8 +51,6 @@ export function DropdownMenu({
     dismiss,
   ]);
 
-  const selectedItem = options.find((option) => option.key === selected);
-
   return (
     <div className="relative">
       <button
@@ -64,10 +65,10 @@ export function DropdownMenu({
         <span
           className={clsx(
             "text-base truncate",
-            !selectedItem && "text-gray-500"
+            !selectedOption && "text-gray-500"
           )}
         >
-          {selectedItem ? selectedItem.label : placeholder}
+          {selectedOption ? selectedOption.label : placeholder}
         </span>
         <ChevronDown className="h-5 w-5 text-gray-400 flex-shrink-0" />
       </button>
@@ -86,6 +87,7 @@ export function DropdownMenu({
                   key={option.key}
                   onClick={() => {
                     onSelect(option.key);
+                    setSelectedOption(option);
                     setIsOpen(false);
                   }}
                   className={clsx(

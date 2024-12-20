@@ -11,6 +11,7 @@ import {
 import { useSectionOrder } from "./context/SectionOrderContext";
 import { Input } from "./UI/input";
 import { formSections } from "../config/formSections";
+import { DropdownMenu, SelectorOption } from "./UI/DropdownMenu";
 
 interface FieldInput {
   name: string;
@@ -22,6 +23,25 @@ interface CustomFieldInput {
   type: "text" | "date" | "textarea" | "email";
   label: string;
 }
+
+const options: SelectorOption[] = [
+  {
+    key: "text",
+    label: "Text",
+  },
+  {
+    key: "textarea",
+    label: "Text Area",
+  },
+  {
+    key: "date",
+    label: "Date",
+  },
+  {
+    key: "email",
+    label: "Email",
+  },
+];
 
 export function CustomSectionCreator() {
   const { setFieldValue } = useFormikContext<ResumeData>();
@@ -46,7 +66,7 @@ export function CustomSectionCreator() {
   };
 
   const handleCreateSection = () => {
-    if (!sectionTitle || fields.some((f) => !f.name || !f.label)) return;
+    if (!sectionTitle || fields.some((f) => !f.name)) return;
 
     const sectionId = `custom_${Date.now()}`;
 
@@ -59,7 +79,7 @@ export function CustomSectionCreator() {
       fields: fields.map((f) => ({
         id: `${sectionId}_${f.name}`,
         name: f.name,
-        label: f.label,
+        label: f.name,
         type: f.type,
         isRequired: false,
       })),
@@ -98,6 +118,7 @@ export function CustomSectionCreator() {
             value={sectionTitle}
             onChange={(e) => setSectionTitle(e.target.value)}
             placeholder="e.g., Certifications, Awards"
+            className="pl-4"
           />
         </div>
 
@@ -117,39 +138,29 @@ export function CustomSectionCreator() {
               </div>
               <div>
                 <label className="block text-sm font-medium mb-1">
-                  Field Label
-                </label>
-                <Input
-                  type="text"
-                  value={field.label}
-                  onChange={(e) =>
-                    updateField(index, { label: e.target.value })
-                  }
-                  placeholder="e.g., Certification Name"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">
                   Field Type
                 </label>
-                <select
-                  value={field.type}
-                  onChange={(e) =>
-                    updateField(index, { type: e.target.value as any })
-                  }
-                  className="w-full p-2 border rounded"
-                >
-                  <option value="text">Text</option>
-                  <option value="textarea">Text Area</option>
-                  <option value="date">Date</option>
-                  <option value="email">Email</option>
-                </select>
+                <DropdownMenu
+                  key={index}
+                  onSelect={(key: string) => {
+                    const selectedOption = options.find(
+                      (option) => option.key === key
+                    );
+                    if (!selectedOption) {
+                      return;
+                    }
+                    updateField(index, { type: selectedOption.key as any });
+                  }}
+                  placeholder="Select field type"
+                  options={options}
+                  selected="text"
+                />
               </div>
             </div>
             <Button
               onClick={() => removeField(index)}
               variant="destructive"
-              customStyles="mt-2"
+              customStyles="mt-4"
             >
               Remove Field
             </Button>
