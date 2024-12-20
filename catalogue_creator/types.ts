@@ -4,7 +4,8 @@ export interface FormSection {
   title: string;
   icon?: React.ComponentType;
   isArray?: boolean;
-  fields: FormField[];
+  isCustom?: boolean;
+  fields: FormField[] | CustomSectionField[];
 }
 
 export interface Theme {
@@ -29,6 +30,21 @@ export interface FormField {
   icon?: React.ComponentType;
 }
 export type FieldType = "text" | "date" | "textarea" | "email";
+
+export interface CustomSectionField extends FormField {
+  id: string; // Unique identifier for the field
+  isRequired?: boolean;
+}
+
+// For custom section data
+export interface CustomSectionData {
+  [key: string]: string | string[]; // Values for the fields
+}
+export interface CustomSectionTemplate {
+  id: string;
+  title: string;
+  fields: CustomSectionField[];
+}
 
 export interface ResumeData {
   personalInfo: {
@@ -58,6 +74,9 @@ export interface ResumeData {
     description: string;
   }>;
   skills: string;
+  customSections: {
+    [key: string]: CustomSectionData;
+  };
   // Add more sections as needed
 }
 
@@ -96,6 +115,7 @@ export const initialValues: ResumeData = {
     },
   ],
   skills: "",
+  customSections: {},
   // Initialize more sections if needed
 };
 
@@ -133,4 +153,5 @@ export const sampleData: ResumeData = {
     },
   ],
   skills: "HTML, CSS, Javascript, TensorFlow, Python ,Numpy",
+  customSections: {},
 };

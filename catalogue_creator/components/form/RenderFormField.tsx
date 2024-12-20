@@ -26,7 +26,7 @@ export function RenderFormField({ field, prefix }: FormFieldProps) {
             placeholder={field.placeholder}
             className="mt-1 block w-full p-2 border border-gray-300 rounded 
                      focus:outline-none focus:ring-2 focus:ring-blue-500
-                     min-h-[100px]"
+                     min-h-[80px]"
           />
         ) : (
           <Field

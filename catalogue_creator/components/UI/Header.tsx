@@ -1,6 +1,6 @@
 export function Header() {
   return (
-    <header className="bg-white border-b h-16 flex-shrink-0 top-0 z-50 ">
+    <header className="bg-gray-50 border-b h-16 flex-shrink-0 top-0 z-50 ">
       <div className="max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16">
           {/* Logo/Brand */}

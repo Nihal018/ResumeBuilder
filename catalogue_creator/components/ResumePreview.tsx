@@ -15,6 +15,8 @@ import { fontFamilyMap } from "./fonts";
 import { useResume } from "./context/ResumeContext";
 import { useTheme } from "./context/ThemeContext";
 import { useSectionOrder } from "./context/SectionOrderContext";
+import { CustomSectionField } from "../types";
+import { formSections } from "../config/formSections";
 
 export function ResumePreview() {
   const { resumeData } = useResume();
@@ -115,6 +117,24 @@ export function ResumePreview() {
         color: theme.colors.text,
         fontFamily: theme.fonts.body,
       },
+      customSectionContainer: {
+        marginBottom: 15,
+      },
+      customFieldLabel: {
+        fontSize: 12,
+        fontWeight: "bold",
+        color: theme.colors.secondary,
+        fontFamily: theme.fonts.body,
+      },
+      customFieldValue: {
+        fontSize: 12,
+        color: theme.colors.text,
+        fontFamily: theme.fonts.body,
+        marginTop: 2,
+      },
+      customSectionRow: {
+        marginBottom: 8,
+      },
     });
   }, [theme]);
 
@@ -129,7 +149,50 @@ export function ResumePreview() {
     return description.split(". ").filter((bullet) => bullet.trim().length > 0);
   };
 
+  const renderCustomSection = (sectionId: string) => {
+    const customSectionData = resumeData.customSections[sectionId];
+    if (!customSectionData) return null;
+
+    const section = formSections.find((s) => s.id === sectionId);
+    if (!section || !section.isCustom) return null;
+
+    return (
+      <>
+        <Text style={styles.sectionTitle}>{section.title.toUpperCase()}</Text>
+        <View style={styles.customSectionContainer}>
+          {(section.fields as CustomSectionField[]).map((field) => {
+            const value = customSectionData[field.name];
+
+            if (field.type === "textarea") {
+              return (
+                <View key={field.id}>
+                  <Text style={styles.companyText}>{field.label}</Text>
+                  {typeof value === "string" &&
+                    value.trim() &&
+                    splitIntoBullets(value).map((bullet, i) =>
+                      renderBulletPoint(bullet)
+                    )}
+                </View>
+              );
+            }
+
+            return (
+              <View key={field.id} style={styles.table}>
+                <View style={styles.tableColumn}>
+                  <Text style={styles.companyText}>{field.label}</Text>
+                  <Text style={styles.tableText}>{value}</Text>
+                </View>
+              </View>
+            );
+          })}
+        </View>
+      </>
+    );
+  };
   const renderSection = (sectionId: string) => {
+    if (sectionId.startsWith("custom_")) {
+      return renderCustomSection(sectionId);
+    }
     switch (sectionId) {
       case "personalInfo":
         return (
