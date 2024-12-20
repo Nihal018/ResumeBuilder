@@ -137,7 +137,7 @@ export function ComboBox({
         onKeyDown={handleKeyDown}
       >
         <button
-          className="w-full h-auto flex justify-between rounded-lg px-2 outline-none"
+          className="w-full h-auto flex justify-between rounded-lg px-3 outline-none"
           onClick={() => setIsOpen(true)}
         >
           {value === "Modern" || value === "Professional" || value === "Regular"

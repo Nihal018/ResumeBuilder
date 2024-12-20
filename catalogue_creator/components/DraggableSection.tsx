@@ -57,7 +57,7 @@ export function DraggableSection({
 
       // Get vertical middle of hover target
       const hoverMiddleY =
-        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 4;
 
       // Get mouse position
       const clientOffset = monitor.getClientOffset();

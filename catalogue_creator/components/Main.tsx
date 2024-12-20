@@ -4,6 +4,7 @@ import { ComboBox } from "./UI/ComboBox";
 import dynamic from "next/dynamic";
 import { RenderSelectedTemplate } from "./TemplatePreviewSection";
 import { ResumeForm } from "./form/ResumeForm";
+import { Header } from "./UI/Header";
 
 const DynamicRenderSelectedTemplate = dynamic(
   () =>
@@ -31,12 +32,14 @@ export function Main() {
   }, []);
 
   return (
-    <main className="overflow-hidden h-screen">
-      <div className="my-4 flex flex-row " style={{ height: "98vh" }}>
-        <div className="border border-black flex-1 mx-2 p-2 overflow-y-auto ">
-          <div className="">
-            <p className="text-center">Templates</p>
-            <div className="min-w-fit max-w-2xl w-8/12 mx-auto ">
+    <div className="flex flex-col h-screen">
+      <Header />
+      <main className="flex-1 flex overflow-hidden">
+        {/* Left Column */}
+        <div className="flex-1 p-2 overflow-hidden flex flex-col border border-black m-3">
+          <div className="mb-4">
+            <p className="text-center font-medium text-gray-700">Templates</p>
+            <div className="max-w-3xl w-9/12 mx-auto mt-2">
               <ComboBox
                 options={options}
                 placeholder="Select a template"
@@ -44,18 +47,21 @@ export function Main() {
                 selected="1"
               />
             </div>
+          </div>
 
+          {/* Form with proper scrolling */}
+          <div className="flex-1 overflow-y-auto">
             <ResumeForm />
           </div>
         </div>
 
-        <div className="flex-1 border border-black  mx-2 p-2 overflow-y-auto">
-          {/* Preview Section */}
+        {/* Right Column */}
+        <div className="flex-1 p-4 overflow-y-auto border border-black m-3">
           {isBrowser && (
             <RenderSelectedTemplate selectedTemplate={selectedTemplate} />
           )}
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }

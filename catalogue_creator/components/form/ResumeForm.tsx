@@ -82,16 +82,6 @@ export function ResumeForm() {
     setIsAutofilled(true);
   };
 
-  const onDragEnd = (result: any) => {
-    if (!result.destination) return;
-
-    const items = Array.from(sectionOrder);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-
-    setSectionOrder(items);
-  };
-
   const renderSection = (sectionId: string, values: any) => {
     const section = formSections.find((section) => section.id === sectionId);
     if (section === undefined) return null;
@@ -112,7 +102,7 @@ export function ResumeForm() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <CustomizationPanel />
       <Formik
         initialValues={resumeData}
@@ -129,16 +119,6 @@ export function ResumeForm() {
               </Button>
             </div>
 
-            {/* {formSections.map((section) => {
-              return renderSection(section,values)
-              return (
-              <RenderFormSection
-                key={`form-section-${section.id}`}
-                section={section}
-                values={values}
-              />
-             )  }  )
-            } */}
             <DndProvider backend={HTML5Backend}>
               <div className="space-y-4">
                 {sectionOrder.map((sectionId, index) => (
