@@ -30,7 +30,6 @@ export function ComboBox({
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
 
-  // Set highlighted index to 0 when dropdown opens
   useEffect(() => {
     if (isOpen) {
       setHighlightedIndex(0);

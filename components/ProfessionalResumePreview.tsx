@@ -1,6 +1,5 @@
 "use client";
 import { fontFamilyMap } from "./fonts";
-
 import React, { useMemo } from "react";
 import { useResume } from "./context/ResumeContext";
 import {

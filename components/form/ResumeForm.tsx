@@ -49,6 +49,36 @@ const RenderSection = (sectionId: string, values: any) => {
     />
   );
 };
+const renderCustomSection = (sectionId: string, values: ResumeData) => {
+  const customSectionData = values.customSections[sectionId];
+  if (!customSectionData) return null;
+
+  const sectionConfig = formSections.find((s) => s.id === sectionId);
+  if (!sectionConfig || !sectionConfig.isCustom) return null;
+
+  return (
+    <div className=" space-y-4 ">
+      <h3 className="text-lg font-semibold ml-6">{sectionConfig.title}</h3>
+      <div className=" p-4 border rounded-lg bg-gray-50">
+        {(sectionConfig.fields as CustomSectionField[]).map((field) => (
+          <div key={field.id}>
+            <label className="block text-sm font-medium mb-1">
+              {field.label}
+            </label>
+            <Field
+              name={`customSections.${sectionId}.${field.name}`}
+              type={field.type === "textarea" ? undefined : field.type}
+              as={field.type === "textarea" ? "textarea" : "input"}
+              className={`w-full p-2 border rounded ${
+                field.type === "textarea" ? "h-32" : ""
+              }`}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export function ResumeForm() {
   const { resumeData, setResumeData } = useResume();
@@ -58,44 +88,6 @@ export function ResumeForm() {
   const handleSubmit = async (values: ResumeData) => {
     await new Promise((r) => setTimeout(r, 500));
     setResumeData(values);
-  };
-
-  const renderCustomSection = (sectionId: string, values: ResumeData) => {
-    const customSectionData = values.customSections[sectionId];
-    if (!customSectionData) return null;
-
-    const sectionConfig = formSections.find((s) => s.id === sectionId);
-    if (!sectionConfig || !sectionConfig.isCustom) return null;
-
-    return (
-      <div className=" space-y-4 ">
-        <h3 className="text-lg font-semibold ml-6">{sectionConfig.title}</h3>
-        <div className=" p-4 border rounded-lg bg-gray-50">
-          {(sectionConfig.fields as CustomSectionField[]).map((field) => (
-            <div key={field.id}>
-              <label className="block text-sm font-medium mb-1">
-                {field.label}
-              </label>
-              <Field
-                name={`customSections.${sectionId}.${field.name}`}
-                type={field.type === "textarea" ? undefined : field.type}
-                as={field.type === "textarea" ? "textarea" : "input"}
-                className={`w-full p-2 border rounded ${
-                  field.type === "textarea" ? "h-32" : ""
-                }`}
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  };
-
-  const moveSection = (dragIndex: number, hoverIndex: number) => {
-    const newSections = [...sectionOrder];
-    const [draggedItem] = newSections.splice(dragIndex, 1);
-    newSections.splice(hoverIndex, 0, draggedItem);
-    setSectionOrder(newSections);
   };
 
   return (
