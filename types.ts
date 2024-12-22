@@ -1,4 +1,3 @@
-// types.ts
 export interface FormSection {
   id: string;
   title: string;
@@ -116,7 +115,6 @@ export const initialValues: ResumeData = {
   ],
   skills: "",
   customSections: {},
-  // Initialize more sections if needed
 };
 
 export const sampleData: ResumeData = {

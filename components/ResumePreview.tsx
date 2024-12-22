@@ -294,7 +294,7 @@ export function ResumePreview() {
   };
 
   return (
-    <PDFViewer style={{ width: "100%", height: "100%" }}>
+    <PDFViewer style={{ width: "100%", height: "100%", zIndex: 100 }}>
       <Document key={documentKey}>
         <Page size="A4" style={styles.page}>
           {sectionOrder.map((sectionId) => renderSection(sectionId))}

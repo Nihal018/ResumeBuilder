@@ -2,24 +2,11 @@
 import React, { useEffect, useState } from "react";
 import { Formik, Form, useFormikContext, FormikHelpers, Field } from "formik";
 import { formSections } from "../../config/formSections";
-import {
-  CustomSectionField,
-  FormSection,
-  ResumeData,
-  sampleData,
-} from "../../types";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-
+import { CustomSectionField, ResumeData } from "../../types";
 import { useSectionOrder } from "../context/SectionOrderContext";
-
 import { Button } from "../UI/Button";
 import { RenderFormSection } from "./RenderFormSection";
-
-import { CustomizationPanel } from "../customization/CustomizationPanel";
 import { useResume } from "../context/ResumeContext";
-import { useTheme } from "../context/ThemeContext";
-import { DraggableSection } from "../DraggableSection";
 import { CustomSectionCreator } from "../CustomSectionCreator";
 
 function useDebounce<T>(value: T, delay: number): T {
@@ -53,9 +40,20 @@ function DebouncedResumeUpdate() {
   return null;
 }
 
+const RenderSection = (sectionId: string, values: any) => {
+  const section = formSections.find((section) => section.id === sectionId);
+  if (section === undefined) return null;
+  return (
+    <RenderFormSection
+      key={`form-section-${sectionId}`}
+      section={section}
+      values={values}
+    />
+  );
+};
+
 export function ResumeForm() {
   const { resumeData, setResumeData } = useResume();
-  const [isAutofilled, setIsAutofilled] = useState(false);
   const { sectionOrder, setSectionOrder } = useSectionOrder();
   const [showCustomBuilder, setShowCustomBuilder] = useState(false);
 
@@ -64,42 +62,6 @@ export function ResumeForm() {
     setResumeData(values);
   };
 
-  const handleAutofill = (
-    setFieldValue: FormikHelpers<ResumeData>["setFieldValue"]
-  ) => {
-    (Object.keys(sampleData) as (keyof ResumeData)[]).forEach((key) => {
-      const dataForKey = sampleData[key];
-
-      if (
-        typeof dataForKey === "object" &&
-        dataForKey !== null &&
-        !Array.isArray(dataForKey)
-      ) {
-        (Object.keys(dataForKey) as (keyof typeof dataForKey)[]).forEach(
-          (nestedKey) => {
-            setFieldValue(`${key}.${nestedKey}`, dataForKey[nestedKey]);
-          }
-        );
-      } else if (Array.isArray(dataForKey)) {
-        setFieldValue(key, dataForKey);
-      } else {
-        setFieldValue(key, dataForKey);
-      }
-    });
-    setIsAutofilled(true);
-  };
-
-  const renderSection = (sectionId: string, values: any) => {
-    const section = formSections.find((section) => section.id === sectionId);
-    if (section === undefined) return null;
-    return (
-      <RenderFormSection
-        key={`form-section-${sectionId}`}
-        section={section}
-        values={values}
-      />
-    );
-  };
   const renderCustomSection = (sectionId: string, values: ResumeData) => {
     // Get the custom section data
     const customSectionData = values.customSections[sectionId];
@@ -141,9 +103,9 @@ export function ResumeForm() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
-      <CustomizationPanel />
+    <div className="max-w-3xl mx-auto px-4 w-full">
       <Formik
+        enableReinitialize
         initialValues={resumeData}
         onSubmit={(values) => {
           handleSubmit(values);
@@ -152,7 +114,7 @@ export function ResumeForm() {
         {({ values, setFieldValue }) => (
           <Form>
             <DebouncedResumeUpdate />
-            <div className="flex justify-between mb-4">
+            <div className="flex justify-end mb-4">
               <Button
                 onClick={() => setShowCustomBuilder(!showCustomBuilder)}
                 variant="secondary"
@@ -161,34 +123,16 @@ export function ResumeForm() {
                   ? "Hide Custom Builder"
                   : "Add Custom Section"}
               </Button>
-              <Button onClick={() => handleAutofill(setFieldValue)}>
-                Autofill
-              </Button>
             </div>
 
             {showCustomBuilder && <CustomSectionCreator />}
 
-            <DndProvider backend={HTML5Backend}>
-              <div className="space-y-4">
-                {sectionOrder.map((sectionId, index) => (
-                  <DraggableSection
-                    key={sectionId}
-                    id={sectionId}
-                    index={index}
-                    moveSection={moveSection}
-                  >
-                    {sectionId.startsWith("custom_")
-                      ? renderCustomSection(sectionId, values)
-                      : renderSection(sectionId, values)}
-                  </DraggableSection>
-                ))}
-              </div>
-            </DndProvider>
-
-            <div>
-              <Button type={"submit"} customStyles="w-36 mt-4">
-                Submit
-              </Button>
+            <div className="flex flex-col gap-y-4">
+              {sectionOrder.map((sectionId) => {
+                return sectionId.startsWith("custom_")
+                  ? renderCustomSection(sectionId, values)
+                  : RenderSection(sectionId, values);
+              })}
             </div>
           </Form>
         )}

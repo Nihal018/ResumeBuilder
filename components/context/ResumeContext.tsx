@@ -1,13 +1,15 @@
 "use client";
-
 import React, { createContext, useState, ReactNode, useCallback } from "react";
-
-import isEqual from "lodash-es/isEqual"; // Import isEqual from lodash-es
+import isEqual from "lodash-es/isEqual";
 import { initialValues, ResumeData } from "../../types";
+import { DEFAULT_TEMPLATE, ResumeTemplateType } from "../constants";
+import { ResumeExamples } from "../example-data";
 
 interface ResumeContextProps {
+  template: ResumeTemplateType;
   resumeData: ResumeData;
   setResumeData: (data: ResumeData) => void;
+  setTemplate: (template: ResumeTemplateType) => void;
 }
 
 const ResumeContext = createContext<ResumeContextProps>(
@@ -17,23 +19,26 @@ const ResumeContext = createContext<ResumeContextProps>(
 export const ResumeProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [resumeData, setResumeDataState] = useState<ResumeData>(initialValues);
+  const [resumeData, setResumeDataState] = useState<ResumeData>(
+    ResumeExamples[0].data
+  );
+  const [selectedTemplate, setSelectedTemplate] =
+    useState<ResumeTemplateType>(DEFAULT_TEMPLATE);
 
-  // Optimize setResumeData to prevent unnecessary updates
   const setResumeData = useCallback((newData: ResumeData) => {
-    // Only update if the new data is different from the current data
     setResumeDataState((prevData) =>
       isEqual(prevData, newData) ? prevData : newData
     );
   }, []);
 
-  // Memoize the context value to prevent unnecessary re-renders
-  const contextValue = React.useMemo(
+  const contextValue: ResumeContextProps = React.useMemo(
     () => ({
       resumeData,
       setResumeData,
+      template: selectedTemplate,
+      setTemplate: setSelectedTemplate,
     }),
-    [resumeData, setResumeData]
+    [resumeData, selectedTemplate, setResumeData]
   );
 
   return (
