@@ -31,11 +31,10 @@ export interface FormField {
 export type FieldType = "text" | "date" | "textarea" | "email";
 
 export interface CustomSectionField extends FormField {
-  id: string; // Unique identifier for the field
+  id: string;
   isRequired?: boolean;
 }
 
-// For custom section data
 export interface CustomSectionData {
   [key: string]: string | string[]; // Values for the fields
 }
@@ -76,10 +75,8 @@ export interface ResumeData {
   customSections: {
     [key: string]: CustomSectionData;
   };
-  // Add more sections as needed
 }
 
-// initialValues.ts
 export const initialValues: ResumeData = {
   personalInfo: {
     name: "",

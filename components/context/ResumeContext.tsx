@@ -1,7 +1,7 @@
 "use client";
 import React, { createContext, useState, ReactNode, useCallback } from "react";
 import isEqual from "lodash-es/isEqual";
-import { initialValues, ResumeData } from "../../types";
+import { ResumeData } from "../../types";
 import { DEFAULT_TEMPLATE, ResumeTemplateType } from "../constants";
 import { ResumeExamples } from "../example-data";
 

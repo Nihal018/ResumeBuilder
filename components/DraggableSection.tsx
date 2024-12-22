@@ -1,7 +1,5 @@
-// components/DraggableSection.tsx
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import type { Identifier, XYCoord } from "dnd-core";
 import { DragSourceMonitor, DropTargetMonitor } from "react-dnd";
 
 interface DragItem {
@@ -28,7 +26,6 @@ export function DraggableSection({
   const [{ isDragging }, dragRef] = useDrag({
     type: "SECTION",
     item: () => {
-      // Store the initial bounding rect when drag starts
       const boundingRect = ref.current?.getBoundingClientRect();
       return { id, index, type: "SECTION", boundingRect };
     },
@@ -48,28 +45,22 @@ export function DraggableSection({
       const dragIndex = item.index;
       const hoverIndex = index;
 
-      // Don't replace items with themselves
       if (dragIndex === hoverIndex) return;
 
-      // Get the bounding rect of the hover target
       const hoverBoundingRect = ref.current.getBoundingClientRect();
 
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 4;
 
-      // Get mouse position
       const clientOffset = monitor.getClientOffset();
       if (!clientOffset) return;
 
-      // Get pixels to the top
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-      // Dragging downwards
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
       }
 
-      // Dragging upwards
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }

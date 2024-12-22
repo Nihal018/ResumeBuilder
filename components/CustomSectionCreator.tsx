@@ -1,13 +1,7 @@
-// components/CustomSectionCreator.tsx
 import { useState } from "react";
 import { Button } from "./UI/Button";
 import { useFormikContext } from "formik";
-import {
-  ResumeData,
-  FormField,
-  FormSection,
-  CustomSectionData,
-} from "../types";
+import { ResumeData, FormSection, CustomSectionData } from "../types";
 import { useSectionOrder } from "./context/SectionOrderContext";
 import { Input } from "./UI/input";
 import { formSections } from "../config/formSections";
@@ -70,7 +64,6 @@ export function CustomSectionCreator() {
 
     const sectionId = `custom_${Date.now()}`;
 
-    // Create new form section
     const newFormSection: FormSection = {
       id: sectionId,
       title: sectionTitle,
@@ -85,10 +78,8 @@ export function CustomSectionCreator() {
       })),
     };
 
-    // Update formSections globally
     formSections.push(newFormSection);
 
-    // Initialize empty values in the form
     setFieldValue(
       `customSections.${sectionId}`,
       fields.reduce((acc, field) => {
@@ -97,10 +88,8 @@ export function CustomSectionCreator() {
       }, {} as CustomSectionData)
     );
 
-    // Add to section order
     setSectionOrder([...sectionOrder, sectionId]);
 
-    // Reset form
     setSectionTitle("");
     setFields([{ name: "", type: "text", label: "" }]);
   };
@@ -157,11 +146,7 @@ export function CustomSectionCreator() {
                 />
               </div>
             </div>
-            <Button
-              onClick={() => removeField(index)}
-              variant="destructive"
-              customStyles="mt-4"
-            >
+            <Button onClick={() => removeField(index)} variant="destructive">
               Remove Field
             </Button>
           </div>

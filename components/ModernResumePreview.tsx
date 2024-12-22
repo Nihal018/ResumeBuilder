@@ -191,7 +191,6 @@ export function ModernResumePreview() {
       case "personalInfo":
         return (
           <>
-            {/* Contact Information */}
             <Text style={styles.leftSectionTitle}>CONTACT</Text>
             <Text style={styles.contactText}>
               {resumeData.personalInfo.email}
@@ -282,18 +281,14 @@ export function ModernResumePreview() {
       <Document key={documentKey}>
         <Page size="A4" style={styles.page}>
           <View style={styles.leftColumn}>
-            {/* Personal Info is always at top */}
             <Text style={styles.header}>{resumeData.personalInfo.name}</Text>
 
-            {/* Render left column sections in order */}
             {leftColumnSections.map((sectionId) => (
               <View key={sectionId}>{renderSection(sectionId)}</View>
             ))}
           </View>
 
-          {/* Right Column */}
           <View style={styles.rightColumn}>
-            {/* Render right column sections in order */}
             {rightColumnSections.map((sectionId) => (
               <View key={sectionId}>{renderSection(sectionId)}</View>
             ))}

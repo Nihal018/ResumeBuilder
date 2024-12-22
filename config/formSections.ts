@@ -137,5 +137,4 @@ export const formSections: FormSection[] = [
       },
     ],
   },
-  // ... other sections
 ];

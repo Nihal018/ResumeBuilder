@@ -2,13 +2,7 @@ import { FieldArrayRenderProps, FieldArray, Field, ErrorMessage } from "formik";
 import { CustomSectionField, FormSection } from "../../types";
 import { ArraySection } from "./ArraySection";
 import { RenderFormField } from "./RenderFormField";
-import {
-  ArrowDown,
-  ArrowUp,
-  ArrowUpDownIcon,
-  MinusIcon,
-  PlusIcon,
-} from "lucide-react";
+import { MinusIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
 import clsx from "clsx";
 interface FormSectionProps {
@@ -91,7 +85,7 @@ export function RenderFormSection({ section, values }: FormSectionProps) {
                   ...field,
                   name: section.id === "skills" ? "skills" : field.name,
                 }}
-                prefix={section.id === "skills" ? "" : section.id} // Add prefix for nested objects like personalInfo
+                prefix={section.id === "skills" ? "" : section.id}
               />
             ))}
           </div>

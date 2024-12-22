@@ -25,7 +25,6 @@ function useDebounce<T>(value: T, delay: number): T {
   return debouncedValue;
 }
 
-// Separate component to handle debounced context updates
 function DebouncedResumeUpdate() {
   const { values } = useFormikContext<ResumeData>();
   const { setResumeData } = useResume();
@@ -33,7 +32,6 @@ function DebouncedResumeUpdate() {
   const debouncedValues = useDebounce(values, 500);
 
   useEffect(() => {
-    // Update context only when debounced values change
     setResumeData(debouncedValues);
   }, [debouncedValues, setResumeData]);
 
@@ -63,11 +61,9 @@ export function ResumeForm() {
   };
 
   const renderCustomSection = (sectionId: string, values: ResumeData) => {
-    // Get the custom section data
     const customSectionData = values.customSections[sectionId];
     if (!customSectionData) return null;
 
-    // Get the section configuration from formSections
     const sectionConfig = formSections.find((s) => s.id === sectionId);
     if (!sectionConfig || !sectionConfig.isCustom) return null;
 
