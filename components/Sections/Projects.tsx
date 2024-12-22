@@ -95,7 +95,7 @@ export function Projects({
               <div className="flex justify-end">
                 <Button
                   onClick={() => addClick(arrayHelpers, "project")}
-                  variant="primary"
+                  variant="default"
                 >
                   Add Project
                 </Button>
