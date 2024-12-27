@@ -146,7 +146,11 @@ export function CustomSectionCreator() {
                 />
               </div>
             </div>
-            <Button onClick={() => removeField(index)} variant="destructive">
+            <Button
+              onClick={() => removeField(index)}
+              variant="destructive"
+              className="mt-3"
+            >
               Remove Field
             </Button>
           </div>
