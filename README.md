@@ -23,6 +23,10 @@ A modern web application built with Next.js that enables users to create profess
 <img width="1786" alt="preview 2" src="https://github.com/user-attachments/assets/333cb215-70ef-47b5-a3e7-0e44a0d55ff4" />
 <img width="1787" alt="preview 3" src="https://github.com/user-attachments/assets/3ba56157-e9fa-4cf7-bfc7-fa11b5f410e8" />
 
+## Link to the App
+Check out the live app here: https://resume-builder-orpin-mu.vercel.app/
+
+
 
 ## 🚀 Getting Started
 
